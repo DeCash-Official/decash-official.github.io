@@ -1,0 +1,56 @@
+:root {
+  /* Use https://docusaurus.io/docs/styling-layout#styling-your-site-with-infima */
+  --ifm-color-primary: #32aae6;
+  --ifm-color-primary: #32aae6;
+  --ifm-color-primary-dark: #1b9fe1;
+  --ifm-color-primary-darker: #1a96d4;
+  --ifm-color-primary-darkest: #157caf;
+  --ifm-color-primary-light: #4bb4e9;
+  --ifm-color-primary-lighter: #57baeb;
+  --ifm-color-primary-lightest: #7dc9ef;
+  --ifm-code-font-size: 95%;
+}
+
+.footer--dark {
+  --ifm-footer-background-color: #283282;
+}
+
+.navbar .navbar__inner {
+  margin: 0 auto;
+  max-width: 1360px
+}
+
+.hero {
+  align-self: stretch;
+}
+
+@media (min-width: 1416px) {
+  .main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .main-wrapper > *:last-child {
+      max-width: 1400px;
+      width: 1400px
+  }
+}
+
+h1 {
+  margin-top: calc( var(--ifm-h1-vertical-rhythm-bottom) * var(--ifm-leading) );
+}
+
+.footer__copyright {
+  white-space: pre-wrap;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+html[data-theme='dark'] .docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.3);
+}
