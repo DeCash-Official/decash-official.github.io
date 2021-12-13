@@ -21,7 +21,7 @@ Your docs now have 2 versions:
 
 To navigate seamlessly across versions, add a version dropdown.
 
-Modify the `docusaurus.config.js` file:
+Modify the `docusaurus.config.js` file.
 
 ```js title="docusaurus.config.js"
 module.exports = {
