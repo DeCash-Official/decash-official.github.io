@@ -22,9 +22,10 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          sidebarPath: require.resolve("./sidebars.js"),
+          path: "docs",
+          sidebarPath: "sidebars.js",
           editUrl:
-            "https://github.com/DeCash-Official/docs.decash.com/edit/main/",
+            "https://github.com/DeCash-Official/docs.decash.com/edit/main/docs/",
         },
         blog: {
           showReadingTime: true,
@@ -53,6 +54,12 @@ const config = {
             docId: "intro",
             position: "left",
             label: "Docs",
+          },
+          {
+            type: "doc",
+            position: "left",
+            docId: "api/overview",
+            label: "API",
           },
           { to: "/blog", label: "Blog", position: "left" },
           {
