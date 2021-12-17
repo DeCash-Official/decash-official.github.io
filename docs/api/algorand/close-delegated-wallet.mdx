@@ -18,7 +18,7 @@ Close the balance of a DeCash asset of a [DelegatedWallet](#TODO), sending the r
 | ----------- | ------------------- | ----------- | 
 | `noSign`    | `string[]`          | The array of transactions (in msgpack) that shall not be signed. Together with `toSign` it composes the full array of transactions in the group. |
 | `toSign`    | `string[]`          | The array of transactions (in msgpack) that must be signed with the spending key of the `owner` of the DelegatedWallet. Together with the `noSign` transactions it composes the full array of transactions in the group. |
-| `info`      | `{fee:number}`      | An object containing `fee`, the amount of DeCash that is being spent on fees in this transaction. | 
+| `info`      | `{fee:number}`      | An object containing `fee`, the amount of DeCash that is being spent on fees in this transaction. (e.g. 1.05 USDD) | 
 
 ### Validation errors
 
