@@ -1,0 +1,90 @@
+# TransferFunds
+
+Send funds from a [DelegatedWallet](#TODO), to another (regular or delegated) wallet.
+
+## Request Parameters
+
+|     Name    |                Type               | Description |
+| ----------- | --------------------------------- | ----------- |
+| `assetId`   | `string`                          | The ID of the DeCash asset that is being sent. |
+| `sender`    | `{address:string, amount:number}` | Object containing the `address` of the DelegatedWallet that is sending the funds, and the `amount` that is being sent. Note that this account must have enough funds to cover both the `amount`, and the [fee](#TODO). |
+| `receiver`  | `string`                          | The address of the account that is receiving the funds. Note that, if this account is not a DelegatedWallet, then it must be opted into the token that is being sent. | 
+
+## Responses
+
+### Regular response
+
+|     Name    |         Type        | Description |
+| ----------- | ------------------- | ----------- | 
+| `noSign` 		| `string[]` 					| The array of transactions (in msgpack) that shall not be signed. Together with `toSign` it composes the full array of transactions in the group. |
+| `toSign` 		| `string[]` 					| The array of transactions (in msgpack) that must be signed with the spending key of the `owner` of the DelegatedWallet. Together with the `noSign` transactions it composes the full array of transactions in the group. |
+| `info` 			| `{fee:number}` 			| An object containing `fee`, the amount of DeCash that is being spent on fees in this transaction. | 
+
+### Validation errors
+
+Returned when the parameters are invalid
+
+|     Name    |                              Content                              |
+| ----------- | ----------------------------------------------------------------- |
+| Status code | 400 																															|
+| `errorId` 	| `INVALID_PARAMS` 																									|
+| `message` 	| `Validation errors in CreateDelegatedPayment request.` 						| 
+| `errors` 		| Array of strings containing additional informations 							|
+
+### Sender not opted in 
+
+Returned when the sender has not yet opted into the token that is being sent.
+
+|     Name    |                              Content                              |
+| ----------- | ----------------------------------------------------------------- |
+| Status code | 400 																															|
+| `errorId` 	| `SENDER_NOT_OPTED_IN` 																						|
+| `message` 	| `Sender must opt in to the asset before sending funds.` 					| 
+
+### Sender not enough funds
+
+Returned when the sender does not have enough funds to pay both the transfer of the funds and the fee.
+
+|     Name    |                              Content                              |
+| ----------- | ----------------------------------------------------------------- |
+| Status code | 400 																															|
+| `errorId` 	| `SENDER_NOT_ENOUGH_FUNDS` 																				|
+| `message` 	| `Sender does not have enough funds to send the requested amount.` |
+
+### Receiver not opted in
+
+Returned when a user is sending funds to a non-[DelegatedWallet](#TODO) account that has not yet opted into the token that is being sent.
+
+|     Name    |                              Content                              |
+| ----------- | ----------------------------------------------------------------- |
+| Status code | 400 																															|
+| `errorId`		| `RECEIVER_NOT_OPTED_IN` 																					|
+| `message`		| `Receiver must opt in to the asset before receiving funds.` 			|
+
+## Example Usage
+
+```js
+const response = await fetch('https://api.decash.com/TransferFunds', {
+  method: 'POST',
+  body: JSON.stringify({
+		'assetId': 'usdd', 
+		'sender': {
+			'address': 'V55LRWVEWZCXO5Z5A6LVEF4DK2AWE7VWKVUKBA6ZWCMA55ODBZKSDDQRBU',
+			'amount': 12.99
+		},
+		'receiver': 'YLCY7SE2XBY52EMOIBZAMXTSXPFVVECIQOHVBIWIR2Z5NT2QLLN2ADZZSE'})
+});
+const data = await response.json();
+```
+
+## Example Success Response
+
+```json
+{
+	"noSign": ["iqNhbXTOAAMNQKNmZWXNE4iiZnbOARszCqNnZW6sdGVzdG5ldC12MS4womdoxCBIY7UYpLPITsgQ8i1PEIHLD3HwWaesIN7GL39w5Qk6IqNncnDEIA7tyH3F0htQxLNlvkltgo3OYB7CWbeNKxDTyzXKSvt3omx2zgEbNvKjcmN2xCDCxY/Imrhx3RGOQHIGXnK7y1qQSIOPUKLIjrPWz1Ba26NzbmTEIGvkIhQ8kyZFK6yPPqxPgOpyqgq3DUTTf62WCXzMNcePpHR5cGWjcGF5", "iaRhcmN2xCDCxY/Imrhx3RGOQHIGXnK7y1qQSIOPUKLIjrPWz1Ba26Jmds4BGzMKo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToio2dycMQgDu3IfcXSG1DEs2W+SW2Cjc5gHsJZt40rENPLNcpK+3eibHbOARs28qNzbmTEIMLFj8iauHHdEY5AcgZecrvLWpBIg49QosiOs9bPUFrbpHR5cGWlYXhmZXKkeGFpZM4DGUVQ", "iqRhYW10AaRhcmN2xCBr5CIUPJMmRSusjz6sT4DqcqoKtw1E03+tlgl8zDXHj6Jmds4BGzMKo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToio2dycMQgDu3IfcXSG1DEs2W+SW2Cjc5gHsJZt40rENPLNcpK+3eibHbOARs28qNzbmTEIK96uNqktkV3dz0Hl1IXg1aBYn62VWigg9mwmA71ww5VpHR5cGWlYXhmZXKkeGFpZM4DGUVQ", "iqRhYW10zQUTpGFyY3bEIMLFj8iauHHdEY5AcgZecrvLWpBIg49QosiOs9bPUFrbomZ2zgEbMwqjZ2VurHRlc3RuZXQtdjEuMKJnaMQgSGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiKjZ3JwxCAO7ch9xdIbUMSzZb5JbYKNzmAewlm3jSsQ08s1ykr7d6Jsds4BGzbyo3NuZMQgr3q42qS2RXd3PQeXUheDVoFifrZVaKCD2bCYDvXDDlWkdHlwZaVheGZlcqR4YWlkzgMZRVA="], 
+	"toSign": ["iKJmds4BGzMKo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToio2dycMQgDu3IfcXSG1DEs2W+SW2Cjc5gHsJZt40rENPLNcpK+3eibHbOARs28qNyY3bEIF31eqX/L2cKuT4a+NfHsT//chu0l/1l/WhK/ut7D7jao3NuZMQgXfV6pf8vZwq5Phr418exP/9yG7SX/WX9aEr+63sPuNqkdHlwZaNwYXk="], 
+	"info": {
+		"asaFee": 0.01
+	}
+}
+```
