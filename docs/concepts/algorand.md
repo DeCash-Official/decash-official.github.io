@@ -34,17 +34,9 @@ There are other wallets available which doesn't support WalletConnect as of 2021
 
 DeCash uses two networks on Algorand:
 
-+ Algorand main network
-+ Algorand test network
++ Algorand [main network](https://algoexplorer.io/)
++ Algorand [test network](https://testnet.algoexplorer.io/)
 
-To find out which assets assets are used in these network, see [token addresses](../tokens/#token-addresses).
+To find out which assets assets are used in these network, see [token addresses](/docs/concepts/tokens/#token-addresses).
 
 
-## Token opt-in
-
-In Algorand, in order to receive DeCash tokens, you first need to [opt-in](https://developer.algorand.org/docs/get-details/asa/#receiving-an-asset)
-your Algorand account into each token that you will be using. When using [DeCash API](/docs/api/overview) and delegated
-wallets, the opt-in procedure is handled for you by DeCash API.
-
-However, when using regular Algorand accounts, you would need to perform opt-in yourself by sending the opt-in transaction
-yourself from your Algorand wallet. Also, this procedure requires you to have some Algo
