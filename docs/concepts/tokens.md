@@ -7,7 +7,7 @@ sidebar_position: 1
 DeCash tokens are multi-currency stablecoins [backed](https://www.decash.com/transparency/) by DeCash.
 It means that users holding DeCash tokens like USDD, which represent United States Dollar, hold the
 same amount of fiat currency (USD), which they can withdraw by selling their DeCash tokens on one of the
-exchanges DeCash tokens are listed.
+exchanges in which DeCash tokens are listed.
 
 Technically, DeCash tokens use [Algorand](https://www.algorand.com/) blockchain. Each individual DeCash
 token (USDD, EURD, etc) is an [Algorand Standard Asset](https://developer.algorand.org/docs/get-details/asa/) (ASA).
@@ -50,7 +50,7 @@ You can find the list of Ethereum-based tokens [here](https://github.com/DeCash-
 
 ## Token opt-in
 
-Because DeCash tokens use [Algorand blockchain](/docs/concepts/algorand), in order to see DeCash tokens
+Because DeCash tokens use the [Algorand blockchain](/docs/concepts/algorand), in order to see DeCash tokens
 and receive DeCash tokens to your regular [Algorand wallet](/docs/concepts/algorand#wallets),
 you first need to [opt-in](https://developer.algorand.org/docs/get-details/asa/#receiving-an-asset)
 your Algorand account into each DeCash token that you will be using. Before performing manual opt-in you

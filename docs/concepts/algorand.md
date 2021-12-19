@@ -24,7 +24,7 @@ In order to use and transact in [DeCash tokens](../tokens), you need to obtain a
 
 + [Algorand official wallet](https://algorandwallet.com/) (mobile app)
 
-There are other wallets available which doesn't support WalletConnect as of 2021:
+There are other wallets available which don't support WalletConnect as of 2021:
 
 + [AlgoSigner](https://www.purestake.com/technology/algosigner/) (a Chrome extension wallet)
 + [My Algo Algorand Wallet](https://wallet.myalgo.com/) (web-based wallet)
@@ -37,6 +37,6 @@ DeCash uses two networks on Algorand:
 + Algorand [main network](https://algoexplorer.io/)
 + Algorand [test network](https://testnet.algoexplorer.io/)
 
-To find out which assets assets are used in these network, see [token addresses](/docs/concepts/tokens/#token-addresses).
+To find out which assets are used in these networks, see [token addresses](/docs/concepts/tokens/#token-addresses).
 
 
