@@ -1,0 +1,48 @@
+# AssetInfo
+
+Returns informations regarding DeCash assets.
+
+## Request Parameters
+
+|     Name    |                Type               | Description |
+| ----------- | --------------------------------- | ----------- |
+| `assetId`   | OPTIONAL `string`                 | The ID of the DeCash asset of which informations will be returned. If not set, informations about all DeCash tokens will be returned. |
+
+## Responses
+
+### Regular response
+
+|     Name    |                           Type                          | Description |
+| ----------- | ------------------------------------------------------- | ----------- | 
+| `info`      | `Array<{assetId:string, asaId:number, baseFee:number}>` | The array of informations regarding assets. The field `assetId` contains the DeCash Asset ID (e.g. `usdd`); the field `asaId` contains the ID of the actual algorand asset (e.g. 51987792); the field `baseFee` contains the amount that must be paid in fees per sender-receiver for this specific asset. |
+
+### Validation errors
+
+Returned when the parameters are invalid.
+
+|     Name    |                              Content                              |
+| ----------- | ----------------------------------------------------------------- |
+| Status code | 400                                                               |
+| `errorId`   | `INVALID_PARAMS`                                                  |
+| `message`   | `Validation errors in AssetInfo request.`                         | 
+| `errors`    | Array of strings containing additional informations.              |
+
+## Example Usage
+
+```js
+const response = await fetch('https://api.decash.com/TransferFunds', {
+  method: 'POST',
+  body: JSON.stringify({
+    'assetId': 'usdd',
+  })
+});
+const data = await response.json();
+```
+
+## Example Success Response
+
+```json
+{
+	"info": [{"assetId": "usdd", "asaId": 51987792, "baseFee": 0.01}]
+}
+```
