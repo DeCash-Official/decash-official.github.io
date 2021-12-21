@@ -22,5 +22,11 @@
   },
   "[typescriptreact]": {
     "editor.formatOnSave": true
+  },
+  "files.associations": {
+    "*.pl": "prolog",
+    "*.pyteal": "python",
+    "*.ttml": "xml",
+    "*.ttss": "css"
   }
 }
