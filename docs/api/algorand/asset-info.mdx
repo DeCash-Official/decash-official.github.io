@@ -6,7 +6,7 @@ Returns informations regarding DeCash assets.
 
 |     Name    |                Type               | Description |
 | ----------- | --------------------------------- | ----------- |
-| `assetId`   | OPTIONAL `string`                 | The ID of the DeCash asset of which informations will be returned. If not set, informations about all DeCash tokens will be returned. |
+| `assetId`   | `string`                          | The ID of the DeCash asset of which informations will be returned. If not set, informations about all DeCash tokens will be returned. |
 
 ## Responses
 
@@ -14,7 +14,7 @@ Returns informations regarding DeCash assets.
 
 |     Name    |                           Type                          | Description |
 | ----------- | ------------------------------------------------------- | ----------- | 
-| `info`      | `Array<{assetId:string, asaId:number, baseFee:number}>` | The array of informations regarding assets. The field `assetId` contains the DeCash Asset ID (e.g. `usdd`); the field `asaId` contains the ID of the actual algorand asset (e.g. 51987792); the field `baseFee` contains the amount that must be paid in fees per sender-receiver for this specific asset. |
+| `info`      | `Array<{assetId:string, asaId:number, baseFee:number}>` | The array of asset properties. The field `assetId` contains the DeCash Asset ID (e.g. `usdd`); the field `asaId` contains the ID of the actual [algorand asset](../../concepts/tokens#token-addresses) (e.g. 51987792); the field `baseFee` contains the amount that must be paid (of this specific asset) by the sender for each sender-receiver pair. |
 
 ### Validation errors
 
