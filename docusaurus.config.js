@@ -26,11 +26,17 @@ const config = {
           sidebarPath: "sidebars.js",
           editUrl:
             "https://github.com/DeCash-Official/docs.decash.com/edit/main/docs/",
+          remarkPlugins: [
+            [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
+          ],
         },
         blog: {
           showReadingTime: true,
           editUrl:
             "https://github.com/DeCash-Official/docs.decash.com/edit/main/blog/",
+          remarkPlugins: [
+            [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
+          ],
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
