@@ -39,10 +39,10 @@ Here is the list of DeCash's tokens in the **main Algorand network**:
 
 The following tokens are used in the **test Algorand network**:
 
-+ [CFHD](https://testnet.algoexplorer.io/asset/43119734) (asset ID `43119734`)
-+ [EURD](https://testnet.algoexplorer.io/asset/43119735) (asset ID `43119735`)
++ [CFHD](https://testnet.algoexplorer.io/asset/51987790) (asset ID `51987790`)
++ [EURD](https://testnet.algoexplorer.io/asset/51987793) (asset ID `51987793`)
 <!-- + [GBPD](?) (asset ID `?`) - Is it deployed? -->
-+ [USDD](https://testnet.algoexplorer.io/asset/41673857) (asset ID `41673857`)
++ [USDD](https://testnet.algoexplorer.io/asset/51987792) (asset ID `51987792`)
 
 DeCash also issues tokens on Ethereum, however, due to high transaction fees they aren't used for transactions.
 You can find the list of Ethereum-based tokens [here](https://github.com/DeCash-Official/smart-contracts).

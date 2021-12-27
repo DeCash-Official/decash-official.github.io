@@ -1,0 +1,60 @@
+---
+sidebar_position: 3
+---
+
+import CenteredImage from '/src/components/CenteredImage';
+
+# Delegated Wallets
+
+[DeCash API](/docs/api/overview) provides endpoints to create and manipulate Delegated Wallets -
+virtual multi-purpose wallets controlled by users. Delegated Wallets provide the following key
+properties to the users of DeCash tokens:
+
++ DeCash API accepts transactions to Delegated Wallets and pay fees in [Algo](#TODO) on behalf of users.
++ DeCash API abstracts the [DeCash token opt-in](/docs/concepts/tokens#token-opt-in) procedure and will automatically opt Delegated Wallets in.
+
+You can find out all methods that allow you to work with Delegated Wallets in the [DeCash API docs](/docs/api/overview).
+
+
+## Use cases
+
+Delegated Wallets can be used for a variety of use cases:
+
++ Abstracting the Algo fee away from users (Delegated Wallet owners), allowing to pay for transactions in DeCash tokens instead of [Algos](#TODO).
++ Creating temporary (hot) wallets for accepting purchases in [DeCash Tokens](/docs/concepts/tokens) (see the [guide](#TODO));
++ Paying to clients (if you are an exchange), which allows to opt-in their wallets automatically;
++ Batching transactions using [one-to-many transfers](/docs/api/algorand/one-to-many-transfer), for instance, to distribute tokens in one batch;
++ Using [many-to-one transfers](/docs/api/algorand/many-to-one-transfer), for instance, to collect tokens from many Delegated Wallets in one batch.
+
+
+## Implementation details
+
+On [Algorand](/docs/concepts/algorand/), Delegated Wallets are implemented as [Smart Signatures](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/#smart-signatures).
+It means that there is no smart contract deployed for each new Delegated Wallet, but rather the
+Delegated Wallet itself is a unique signature having its unique Algorand account address, which
+defines who and how can control DeCash tokens held at this specific Algorand address.
+
+Simplifying the Algorand-specific concepts, Delegated Wallets can be described by the following scheme:
+
+<CenteredImage alt="Delegated wallets" src="/img/delegated-wallets.png"/>
+
+For instance, to transact in DeCash tokens:
+
+1. The owner of the Delegated Wallet (the "owner") requests a delegated transaction from DeCash API, effectively
+   asking it to pay the Algo fee for this transaction. For instance, this transaction can be a token transfer
+	 from their Delegated Wallet to another wallet.
+2. DeCash API sends the Algorand transaction to the owner to sign.
+3. The owner signs the transaction thus allowing Delegated Wallet's Smart Signature to verify it, and sends the
+   transaction back to DeCash API.
+4. DeCash API executes the signed transaction (group) in the Algorand network, paying fees in Algo and taking the
+   fee for this transaction in DeCash tokens.
+5. Alternatively, if the user wishes to pay fees in Algo, they can interact with the Delegated Wallet themselves
+   by submitting their transactions directly to the Algorand network. Thus, they don't depend on the DeCash API.
+
+The [Smart Signature](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/#smart-signatures),
+defined by a smart contract program, also defines:
+
++ The Algorand owner account of the Delegated Wallet this signature represents.
++ The logic of the program, allowing only the owner of this Delegated Wallet to manage its assets.
++ The provider's account used to [opt in](/docs/concepts/tokens#token-opt-in) and opt out this Delegated Wallet,
+	which will manage Algo currency on this wallet required by Algorand to have it operational.
