@@ -43,9 +43,9 @@ For instance, to transact in DeCash tokens:
 1. The owner of the Delegated Wallet (the "owner") requests a delegated transaction from DeCash API, effectively
    asking it to pay the Algo fee for this transaction. For instance, this transaction can be a token transfer
 	 from their Delegated Wallet to another wallet.
-2. DeCash API sends the Algorand transaction to the owner to sign.
-3. The owner signs the transaction thus allowing Delegated Wallet's Smart Signature to verify it, and sends the
-   transaction back to DeCash API.
+2. DeCash API sends the Algorand transaction to the owner to sign it.
+3. The owner signs the transaction and then it is send back to DeCash API. The Smart Signature logic will
+   additionally verify the owner and spending conditions.
 4. DeCash API executes the signed transaction (group) in the Algorand network, paying fees in Algo and taking the
    fee for this transaction in DeCash tokens.
 5. Alternatively, if the user wishes to pay fees in Algo, they can interact with the Delegated Wallet themselves
@@ -57,4 +57,4 @@ defined by a smart contract program, also defines:
 + The Algorand owner account of the Delegated Wallet this signature represents.
 + The logic of the program, allowing only the owner of this Delegated Wallet to manage its assets.
 + The provider's account used to [opt in](/docs/concepts/tokens#token-opt-in) and opt out this Delegated Wallet,
-	which will manage Algo currency on this wallet required by Algorand to have it operational.
+	specifically to move Algos in and out of this wallet, which is required by Algorand to have it operational.
