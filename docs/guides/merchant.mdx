@@ -1,0 +1,45 @@
+---
+sidebar_position: 2
+---
+
+import CenteredImage from '/src/components/CenteredImage';
+
+
+# Merchandise store
+
+This article will guide you through the example of building the merchandise store using DeCash tokens.
+In this article, we call a store which sells goods the "merchant", and a "customer" is one who makes a
+purchase in this store.
+
+
+## The concept
+
+[Delegated Wallets](/docs/concepts/delegated-wallets) allow merchants to create multiple multi-purpose
+wallets, primarily to accept DeCash tokens and distinct users who make payments.
+
+The following sequence of actions happen in order for customers to pay for their purchases in [DeCash tokens](/docs/concepts/tokens),
+represented by the following sequence diagram:
+
+<!-- Source https://drive.google.com/file/d/1-gzjHLhmlCEfTDQ5iYQdFLadjfmyWc7H/view?usp=sharing -->
+<CenteredImage alt="Customer-to-merchant payment diagram" src="/img/merchant-customer-payment-sequence-diagram.png"/>
+
+1. The customer finally lands on the payment page, where they have to pay for their purchases in DeCash tokens.
+2. The merchant generates a new [Delegated Wallet](/docs/concepts/delegated-wallets) by invoking
+   [CreateDelegatedWallet](/docs/api/algorand/create-delegated-wallet) in [DeCash API](/docs/api/overview).
+	 They receive an address like `6E63EKJYUPLL4SKM5FNX3PD7HSWZ26XPS7BXYLVWJAPDEK3VA7DERTFV4E`, which is then
+	 optionally displayed to the customer.
+3. The customer is then asked to make a payment to this address. Effectively, the merchant invokes
+   [CreateDelegatedPayment](/docs/api/algorand/create-delegated-payment) and asks the customer to sign the
+	 returned [toSign](/docs/api/algorand/create-delegated-payment#regular-response) transaction with their
+	 Algorand wallet. When signing the transaction, a transaction fee in DeCash tokens is displayed to the user.
+4. The customer signs the transaction. See [signing transactions](/docs/getting-started/signing-transactions)
+   to learn more how they can do it for different wallets.
+5. The signed transaction is sent back to DeCash API via the [SubmitTransaction](/docs/api/algorand/submit-transaction)
+   endpoint.
+6. Once the submitted transaction is mined in the blockchain (takes around 5 seconds), it is considered final
+   and the merchant can release the goods to the customer. Merchants can check the transaction status using
+	 [CheckTransaction](#TODO) API endpoint.
+
+Thus, every customer goes through the same procedure of making payments to different Delegated Wallets, whereas
+the merchant can keep a mapping of which purchase corresponds to which delegated wallet. Merchants can then collect
+funds from many Delegated Wallets to a single wallet using [ManyToOneTransfer](/docs/api/algorand/many-to-one-transfer).
