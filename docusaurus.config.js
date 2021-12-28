@@ -25,7 +25,7 @@ const config = {
           path: "docs",
           sidebarPath: "sidebars.js",
           editUrl:
-            "https://github.com/DeCash-Official/docs.decash.com/edit/main/docs/",
+            "https://github.com/DeCash-Official/docs.decash.com/edit/main/",
           remarkPlugins: [
             [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
           ],
