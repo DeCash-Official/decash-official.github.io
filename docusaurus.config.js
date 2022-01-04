@@ -25,12 +25,18 @@ const config = {
           path: "docs",
           sidebarPath: "sidebars.js",
           editUrl:
-            "https://github.com/DeCash-Official/docs.decash.com/edit/main/docs/",
+            "https://github.com/DeCash-Official/docs.decash.com/edit/main/",
+          remarkPlugins: [
+            [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
+          ],
         },
         blog: {
           showReadingTime: true,
           editUrl:
             "https://github.com/DeCash-Official/docs.decash.com/edit/main/blog/",
+          remarkPlugins: [
+            [require("@docusaurus/remark-plugin-npm2yarn"), { sync: true }],
+          ],
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -61,7 +67,7 @@ const config = {
             docId: "api/overview",
             label: "API",
           },
-          { to: "/blog", label: "Blog", position: "left" },
+          // { to: "/blog", label: "Blog", position: "left" },
           {
             href: "https://github.com/DeCash-Official",
             label: "GitHub",
@@ -109,10 +115,10 @@ const config = {
                 label: "Website",
                 to: "https://www.decash.com/",
               },
-              {
-                label: "Blog",
-                to: "/blog",
-              },
+              // {
+              //   label: "Blog",
+              //   to: "/blog",
+              // },
               {
                 label: "GitHub",
                 href: "https://github.com/DeCash-Official",

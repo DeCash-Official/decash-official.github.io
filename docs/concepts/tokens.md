@@ -39,10 +39,10 @@ Here is the list of DeCash's tokens in the **main Algorand network**:
 
 The following tokens are used in the **test Algorand network**:
 
-+ [CFHD](https://testnet.algoexplorer.io/asset/43119734) (asset ID `43119734`)
-+ [EURD](https://testnet.algoexplorer.io/asset/43119735) (asset ID `43119735`)
++ [CFHD](https://testnet.algoexplorer.io/asset/51987790) (asset ID `51987790`)
++ [EURD](https://testnet.algoexplorer.io/asset/51987793) (asset ID `51987793`)
 <!-- + [GBPD](?) (asset ID `?`) - Is it deployed? -->
-+ [USDD](https://testnet.algoexplorer.io/asset/41673857) (asset ID `41673857`)
++ [USDD](https://testnet.algoexplorer.io/asset/51987792) (asset ID `51987792`)
 
 DeCash also issues tokens on Ethereum, however, due to high transaction fees they aren't used for transactions.
 You can find the list of Ethereum-based tokens [here](https://github.com/DeCash-Official/smart-contracts).
@@ -50,15 +50,15 @@ You can find the list of Ethereum-based tokens [here](https://github.com/DeCash-
 
 ## Token opt-in
 
+:::info
+When using [DeCash API](/docs/api/overview) and [delegated wallets](/docs/concepts/delegated-wallets),
+the opt-in procedure is handled for you by DeCash API. Read more in the [API](/docs/api/overview) section.
+:::
+
 Because DeCash tokens use the [Algorand blockchain](/docs/concepts/algorand), in order to see DeCash tokens
 and receive DeCash tokens to your regular [Algorand wallet](/docs/concepts/algorand#wallets),
 you first need to [opt-in](https://developer.algorand.org/docs/get-details/asa/#receiving-an-asset)
 your Algorand account into each DeCash token that you will be using. Before performing manual opt-in you
-will need some [Algo](#TODO - how to get algo), the Algorand currency.
+will need some [Algo](/docs/getting-started/getting-algo), the Algorand currency.
 
-:::tip
-When using [DeCash API](/docs/api/overview) and [delegated wallets](#TODO), the opt-in procedure is handled for you by DeCash API.
-Read more in the [API](/docs/api/overview) section.
-:::
-
-[Read more](#TODO-opt-in-guide) about how to opt-in to DeCash tokens.
+[Read more](/docs/getting-started/wallets#opt-in-to-decash-tokens) about how to opt-in to DeCash tokens.
