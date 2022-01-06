@@ -266,7 +266,7 @@ await kmd.releaseWalletHandle(handle);
 
 ## Signing with the SDK
 
-Lastly, we will take a look at how transactions can be signed directly from the [SDK](https://algorand.github.io/js-algorand-sdk/).
+Lastly, we will take a look at how transactions can be signed directly with the [SDK](https://algorand.github.io/js-algorand-sdk/).
 Firstly, each transaction that needs to be signed must be decoded from base64 to a transaction object:
 
 ```js
