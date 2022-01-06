@@ -11,7 +11,7 @@ async function getTransactions(from) {
     const response = await fetch('https://delegator-dev01b.arringo.co/api-test/CreateDelegatedPayment', {
         method: 'POST',
         body: JSON.stringify({
-            assetId: 'usdd',
+            assetId: 'USDD',
             sender: {
                 address: from,
                 amount: 5,
@@ -19,45 +19,27 @@ async function getTransactions(from) {
             receiver: 'CNIOPGMZ3OSZLPEO7POGMVUEQVDV2RT3G4MSKGHRBX2SOPOEIOGBIFIMVQ',
         }),
     });
-    const {noSign, toSign} = await response.json();
-    return {noSign, toSign};
+    const {txns} = await response.json();
+    return {txns};
 }
 ```
 
 ## Signing with Algorand Wallet (WalletConnect)
 If you (or your users) are using the Algorand Wallet, WalletConnect is the protocol that you will be using. In this guide we will suppose that some user is interacting with a web page, and is prompted to sign a transaction.
 
-To use walletconnect, we need to import two scripts: one for managing the connection with the wallet, and one to show a QR code:
-```html
-<script type="text/javascript" src="/img/https://github.com/WalletConnect/walletconnect-monorepo/releases/download/1.7.0/qrcode-modal.min.js"></script>
-<script type="text/javascript" src="/img/https://github.com/WalletConnect/walletconnect-monorepo/releases/download/1.7.0/client.min.js"></script>
-```
-Since Algorand uses a custom WalletConnect protocol, one last script which enables communication in that protocol is needed. This library is not available as a minified file, so we will be using Browserify.
-Firstly, we'll install json-rpc-tools and browserify with npm:
-```sh
-npm i @json-rpc-tools/utils browserify
-```
-Then, we create a file `main.js`:
+To use walletconnect, we need to import two modules: one for managing the connection with the wallet, and one to show a QR code that needs to be scanned in order to instantiate a connection.
 ```js
-var jsonRpcTools = require("@json-rpc-tools/utils");
-global.window.jsonRpcTools = jsonRpcTools
-```
-Then, the following command is run to convert the library into a browser compatible module
-```sh
-browserify main.js -o bundle.js
-```
-Once run, it will be possible to import the `json-rpc-tools` library as a script:
-```html
-<script src="/bundle.js"></script>
+import WalletConnect from "@walletconnect/client";
+import QRCodeModal from "algorand-walletconnect-qrcode-modal";
 ```
 
 ### Connecting to the wallet
 To connect to a wallet, we will use the following function:
 ```js
 async function setUpWallet() {
-    const wallet = new WalletConnect.default({
+    const wallet = new WalletConnect({
         bridge: "https://bridge.walletconnect.org",
-        qrcodeModal: WalletConnectQRCodeModal.default,
+        qrcodeModal: QRCodeModal,
     });
     if (!wallet.connected) {
         wallet.createSession();
@@ -71,11 +53,11 @@ async function setUpWallet() {
     return wallet;
 }
 ```
-Let us analyze it line by line. On the first four lines, an instance of WalletConnect is created, which will be used for all consequent interactions with the wallet.
+Let us analyze it line by line. On the first four lines an instance of WalletConnect is created, which will be used for all consequent interactions with the wallet.
 ```js
-const wallet = new WalletConnect.default({
+const wallet = new WalletConnect({
     bridge: "https://bridge.walletconnect.org",
-    qrcodeModal: WalletConnectQRCodeModal.default,
+    qrcodeModal: QRCodeModal,
 });
 ```
 If the user is not yet connected to its wallet, then `wallet.createSession()` is run, which prompts the user to scan a QR code. The function will then wait for the user to connect before returning.
@@ -105,17 +87,16 @@ wallet.accounts[0]
 ### Signing the transactions
 The following snippet creates an array of objects, each containing the transaction itself and, for the transactions which should not be signed, an empty array of signers. 
 ```js
-const group = noSign.map(txn => ({
-    txn: txn,
-    signers: [],
-})).concat(toSign.map(txn => ({
-    txn: txn,
-})));
+const group = txns.map(({txn, signers}) => (signers.length > 0) ? {txn} : {txn, signers: []})
 ```
 Then, a request to sign the transactions is sent to the wallet
 ```js
-const request = jsonRpcTools.formatJsonRpcRequest("algo_signTxn", [group]);
-const result = await wallet.sendCustomRequest(request);
+const result = await wallet.sendCustomRequest({
+    id: Date.now() + Math.floor(Math.random() * 1000),
+    jsonrpc: "2.0",
+    method: "algo_signTxn",
+    params: [group],
+});
 ```
 When the request is sent, the application will show a request to sign a group of transactions. 
 
@@ -123,17 +104,17 @@ When the request is sent, the application will show a request to sign a group of
 <img src="/img/algorandwallet_moreinfo.jpg" height="500px"/>
 <img src="/img/algorandwallet_confirm.jpg" height="500px"/>
 
-Once signed, an array of transactions is returned. However, this array must be filtered to remove the transactions that were not signed, and to correctly encode the ones that were:
+Once signed, an array of transactions is returned. However, this array must be filtered in order to remove the transactions that were not signed, and to correctly encode the ones that were:
 ```js
+const unsigned = txns.filter(({signers}) => signers.length == 0).map(({txn}) => txn);
 const signed = result.filter(txn => txn != undefined).map(txn => btoa(String.fromCharCode.apply(null, txn)))
 ```
-This results can then be sent to the `SubmitTransaction` endpoint for submission.
-
+These results can then be sent to the `SubmitTransaction` endpoint for submission.
 
 ## Signing with MyAlgoWallet
-Another way to sign transaction is by using MyAlgoWallet and MyAlgoConnect. Firstly, the myalgo script must be imported:
-```html
-<script type="text/javascript" src="/img/https://github.com/randlabs/myalgo-connect/releases/download/v1.1.1/myalgo.min.js"></script>
+Another way to sign transaction is by using MyAlgoWallet and MyAlgoConnect. Firstly, the MyAlgoConnect module must be imported:
+```js
+import MyAlgoConnect from '@randlabs/myalgo-connect';
 ```
 ### Connecting to the wallet and getting the addresses
 Before being able to connect to a wallet, an instance of MyAlgoConnect must be created.
@@ -155,8 +136,9 @@ After inserting their password, the prompt will ask the user to choose which acc
 <img src="/img/myalgoconnect_select.png" height="500px"/>
 
 ### Signing the tranasctions
-To sign the transactions, the `signTransaction` method can be used.
+To sign the transactions, the `signTransaction` method can be used, but first, an array containing only the transactions that must be signed, needs to be created.
 ```js
+const toSign = txns.filter(({signers}) => signers.length > 0).map(({txn}) => txn)
 const result = await wallet.signTransaction(toSign)
 ```
 When run, a popup wil appear, asking the user to confirm if they are fine with signing the shown transaction. Once accepted, the user is asked once more for their password.
@@ -165,44 +147,37 @@ When run, a popup wil appear, asking the user to confirm if they are fine with s
 
 Once signed, it is possible to encode the signed transactions to base64
 ```js
-const signed = result.map(txn => btoa(String.fromCharCode.apply(null, txn.blob)));
+const unsigned = txns.filter(({signers}) => signers.length == 0).map(({txn}) => txn)
+const signed = result.map(({blob}) => btoa(String.fromCharCode.apply(null, blob)));
 ```
 so that they can be sent to the `SubmitTransaction` endpoint.
 
 ## Signing with AlgoSigner
-The last wallet for which we'll show how to sign transactions is AlgoSigner. To work with AlgoSigner, first, the AlgoSigner script must be imported:
-```html
-<script type="text/javascript" src="/img/chrome-extension://kmmolakhbgdlpkjkcjkebenjheonagdm/AlgoSigner.min.js"></script>
-```
+The last wallet for which we'll show how to sign transactions is AlgoSigner. Since AlgoSigner injects itself into the `window` object, we do not need to import any library.
 ### Connecting to the wallet
 To connect to a wallet, the following snippet can be run:
 ```js
-await AlgoSigner.connect();
+await window.AlgoSigner.connect();
 ```
 When run, a pop-up will appear, asking the user to enter their password, and to confirm that they actually want to connect the wallet to the website, enabling it to read the list of accounts, and send requests to sign transactions.
 
 <img src="/img/algosigner_connect.png" height="500px"/>
 
-Note that no instance of the wallet is returned. the AlgoSigner object will instead be used for all following operations.
-
+Note that no instance of the wallet is returned. The AlgoSigner object will instead be used for all following operations.   
 
 ### Getting the addresses
 To get the addresses of all connected accounts, the function `AlgoSigner.accounts` can be used. As a parameter, we must specify which ledger we are using: TestNet, or MainNet.
 ```js
-const accounts = await AlgoSigner.accounts({ledger: 'TestNet'}).map(account => account.address);
+const accounts = await window.AlgoSigner.accounts({ledger: 'TestNet'}).map(account => account.address);
 ```
 
 ### Signing the transactions
-Lastly, to sign the transactions, all transactions must be converted to objects which contains the transaction itself, and an empty signer array if the transaction should not be signed.
-```js
-const group = noSign.map(txn => ({txn, signers: []}))
-    .concat(toSign.map(txn => ({txn})))
-```
-The function `AlgoSigner.signTxn` can then be run. Its result should then be filtered to remove all unsigned transactions, and mapped to a base64 encoding.
+Lastly, the function `AlgoSigner.signTxn` can be run. Its result should be filtered to remove all unsigned transactions, and mapped to a base64 encoding.
 ```js 
-const signed = (await AlgoSigner.signTxn(group))
+const unsigned = txns.filter(({signers}) => signers.length == 0).map(({txn}) => txn)
+const signed = (await window.AlgoSigner.signTxn(txns))
     .filter(txn => txn != undefined)
-    .map(txn => txn.blob);
+    .map(({blob}) => blob);
 ```
 When run, a pop-up will ask to confirm each transaction, and then for the user's password.
 <img src="/img/algosigner_accept1.png" height="500px"/>
@@ -213,17 +188,26 @@ When run, a pop-up will ask to confirm each transaction, and then for the user's
 ## Signing with the SDK
 
 Lastly, we will take a look at how transactions can be signed directly from the SDK.
-Firstly, the transaction must be decoded from base64 to a transaction object:
+Firstly, each transaction that needs to be signed must be decoded from base64 to a transaction object:
 ```js
-const toSignDecoded = toSign.map(t => algosdk.decodeUnsignedTransaction(Buffer.from(t, 'base64')));
+const toSign = txns
+    .filter(({signers}) => signers.length > 0)
+    .map(({txn, signers}) => ({
+        signers: signers,
+        txn: algosdk.decodeUnsignedTransaction(Buffer.from(txn, 'base64'))
+    }))
 ```
-Then, each transaction can be signed with the `signTxn` method, with as a parameter the secret key of the signing account:
+Then, each transaction can be signed with the `signTxn` method, with as a parameter the secret key of the signing account, before being re-encoded into base64:
 ```js
-const signed = toSignDecoded.map(txn => txn.signTxn(signer.sk));
+const signed = toSign
+    .map(({txn, signers}) => txn.signTxn(accounts[signers[0]]))
+    .map((txn) => Buffer.from(txn).toString('base64'));
 ```
-After signing, transactions should be re-encoded into base64, before submission to the `SubmitTransaction` endpoint.
+Then, together with the array of unsigned transactions
 ```js
-const signedEncoded = signed.map(t => algosdk.decodeUnsignedTransaction(Buffer.from(t, 'base64')))
+const unsigned = txns
+    .filter(({signers}) => signers.length === 0).map(({txn}) => txn);
 ```
+It will be possible to make a submission to the `SubmitTransaction` endpoint.
 
 ## Signing with the KMD
