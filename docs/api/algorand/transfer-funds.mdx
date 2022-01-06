@@ -14,11 +14,10 @@ Send funds from a [DelegatedWallet](#TODO), to another (regular or delegated) wa
 
 ### Regular response
 
-|     Name    |         Type        | Description |
-| ----------- | ------------------- | ----------- | 
-| `noSign`    | `string[]`          | The array of transactions (in msgpack) that shall not be signed. Together with `toSign` it composes the full array of transactions in the group. |
-| `toSign`    | `string[]`          | The array of transactions (in msgpack) that must be signed with the spending key of the `owner` of the DelegatedWallet. Together with the `noSign` transactions it composes the full array of transactions in the group. |
-| `info`      | `{fee:number}`      | An object containing `fee`, the amount of DeCash that is being spent on fees in this transaction. (e.g. 1.05 USDD) | 
+|     Name    |                   Type                  | Description |
+| ----------- | --------------------------------------- | ----------- | 
+| `txns`      | `Array<{txn:string, signers:string[]}>` | Array of objects each containing a transaction (in msgpack) and an array of `signers` (a list of addresses of the accounts that must sign the transaction). Transactions with an empty `signers` array shall not be signed. |
+| `info`      | `{fee:number}`                          | An object containing `fee`, the amount of DeCash that is being spent on fees in this transaction. (e.g. 1.05 USDD) | 
 
 ### Validation errors
 
