@@ -52,3 +52,8 @@ represented by the following sequence diagram:
 
 Thus, every customer goes through the same procedure of making payments to different Delegated Wallets, whereas
 the merchant can keep a mapping of which purchase corresponds to which delegated wallet.
+
+:::info
+The private keys from the wallet managing multiple Delegated Wallets should be stored on the merchant's side.
+It will be used to collect tokens from Delegated Wallets by using, for example, [ManyToOneTransfer](/docs/api/algorand/many-to-one-transfer).
+:::

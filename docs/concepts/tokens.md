@@ -11,7 +11,8 @@ exchanges in which DeCash tokens are listed.
 
 Technically, DeCash tokens use [Algorand](https://www.algorand.com/) blockchain. Each individual DeCash
 token (USDD, EURD, etc) is an [Algorand Standard Asset](https://developer.algorand.org/docs/get-details/asa/) (ASA).
-Read more about why DeCash has chosen Algorand, its specifics and assets on the [Algorand Ecosystem page](#TODO-algorand/overview).
+Read more about why DeCash has chosen Algorand, its specifics and assets on the [Algorand Ecosystem page](/docs/concepts/algorand).
+
 
 ## Why DeCash tokens are unique
 
@@ -25,7 +26,8 @@ for instance, by transferring 100 USDD tokens, you will pay a fixed 0.01 USDD in
 
 DeCash also combines the simplicity with strong security, making you to be the only person who holds
 private keys from your accounts. You manage your crypto wallet on your own, while DeCash just provides you
-with tools to transact and work with DeCash tokens.
+with tools to transact and work with DeCash tokens, represented by [DeCash API](/docs/api/overview) and
+[Delegated Wallets](/docs/concepts/delegated-wallets).
 
 
 ## Token addresses
@@ -50,15 +52,14 @@ You can find the list of Ethereum-based tokens [here](https://github.com/DeCash-
 
 ## Token opt-in
 
-:::info
-When using [DeCash API](/docs/api/overview) and [delegated wallets](/docs/concepts/delegated-wallets),
+:::warning
+In the DeCash ecosystem, when using [DeCash API](/docs/api/overview) and [delegated wallets](/docs/concepts/delegated-wallets),
 the opt-in procedure is handled for you by DeCash API. Read more in the [API](/docs/api/overview) section.
 :::
 
-Because DeCash tokens use the [Algorand blockchain](/docs/concepts/algorand), in order to see DeCash tokens
-and receive DeCash tokens to your regular [Algorand wallet](/docs/concepts/algorand#wallets),
-you first need to [opt-in](https://developer.algorand.org/docs/get-details/asa/#receiving-an-asset)
-your Algorand account into each DeCash token that you will be using. Before performing manual opt-in you
-will need some [Algo](/docs/getting-started/getting-algo), the Algorand currency.
+If you even need to send DeCash tokens from [delegated wallets](/docs/concepts/delegated-wallets) to a
+regular Algorand wallet, you would need [opt this token into](https://developer.algorand.org/docs/get-details/asa/#receiving-an-asset)
+using DeCash assets. This is required by Algorand as DeCash tokens built on top of the [Algorand blockchain](/docs/concepts/algorand).
+Before performing manual opt-in you will need to have some [Algo](/docs/getting-started/getting-algo) on that wallet.
 
 [Read more](/docs/getting-started/wallets#opt-in-to-decash-tokens) about how to opt-in to DeCash tokens.

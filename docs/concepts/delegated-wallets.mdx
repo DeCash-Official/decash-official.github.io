@@ -6,25 +6,37 @@ import CenteredImage from '/src/components/CenteredImage';
 
 # Delegated Wallets
 
-[DeCash API](/docs/api/overview) provides endpoints to create and manipulate Delegated Wallets -
-virtual multi-purpose wallets controlled by users. Delegated Wallets provide the following key
-properties to the users of DeCash tokens:
+Delegated Wallets are primary wallets used across DeCash ecosystem, which can be controlled by traditional Algorand wallets.
+Technically, the delegated wallet is owned by a single owner wallet, which is a traditional Algorand wallet.
 
-+ DeCash API accepts transactions to Delegated Wallets and pay fees in [Algo](#TODO) on behalf of users.
-+ DeCash API abstracts the [DeCash token opt-in](/docs/concepts/tokens#token-opt-in) procedure and will automatically opt Delegated Wallets in.
+<CenteredImage alt="Delegated wallets" src="/img/delegated-wallets-1.png" width={400}/>
+
+[DeCash API](/docs/api/overview) provides endpoints to create and manipulate Delegated Wallets -
+virtual multi-purpose wallets controlled by either end users or automated systems. Delegated Wallets abstract the Algorand
+blockchain from the user completely, providing the following:
+
++ Same security and control level as native blockchain token with simplified access.
++ DeCash API accepts transactions from and to Delegated Wallets and pays fees in [Algo](https://algorand.foundation/governance/algo-basics) on behalf of users.
++ DeCash API abstracts the [DeCash token opt-in](/docs/concepts/tokens#token-opt-in) procedure and will automatically opt Delegated Wallets in under the hood.
 
 You can find out all methods that allow you to work with Delegated Wallets in the [DeCash API docs](/docs/api/overview).
+A clear distinction should be made between Delegated Wallets and regular Algorand wallets:
+
+<CenteredImage alt="DeCash ecosystem" src="/img/delegated-wallets-2.png" width={600}/>
 
 
 ## Use cases
 
-Delegated Wallets can be used for a variety of use cases:
+Delegated Wallets should be used for all possible use cases.
 
-+ Abstracting the Algo fee away from users (Delegated Wallet owners), allowing to pay for transactions in DeCash tokens instead of [Algos](#TODO).
-+ Creating temporary (hot) wallets for accepting purchases in [DeCash Tokens](/docs/concepts/tokens) (see the [guide](#TODO));
++ Making transactions between users.
++ Creating temporary (hot) wallets for accepting purchases in [DeCash Tokens](/docs/concepts/tokens) (see the [guide](/docs/guides/merchant));
 + Paying to clients (if you are an exchange), which allows to opt-in their wallets automatically;
 + Batching transactions using [one-to-many transfers](/docs/api/algorand/one-to-many-transfer), for instance, to distribute tokens in one batch;
 + Using [many-to-one transfers](/docs/api/algorand/many-to-one-transfer), for instance, to collect tokens from many Delegated Wallets in one batch.
+
+Transferring tokens to a regular Algorand wallet instead of a delegated wallet should be considered as ramping off from DeCash ecosystem,
+which should not be a usual case. However, when needed, DeCash API still allows to perform such transfers.
 
 
 ## Implementation details
