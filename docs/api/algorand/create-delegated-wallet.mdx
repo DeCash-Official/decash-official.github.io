@@ -1,0 +1,48 @@
+# CreateDelegatedWallet
+
+Create a [DelegatedWallet](/docs/concepts/delegated-wallets), given an owner wallet that controls it.
+
+## Request Parameters
+
+|     Name    |         Type        | Description |
+| ----------- | ------------------- | ----------- | 
+| `owner`     | `string`            | The algorand address of the account that will manage the funds in the created DelegatedWallet. |
+
+## Responses
+
+### Regular response
+
+|     Name    |         Type        | Description |
+| ----------- | ------------------- | ----------- | 
+| `wallet`    | `string`            | The algorand address of the created DelegatedWallet. | 
+
+### Validation rerors
+
+Returned when the parameters are invalid
+
+|     Name    |                              Content                              |
+| ----------- | ----------------------------------------------------------------- |
+| Status code | 400                                                               |
+| `errorId`   | `INVALID_PARAMS`                                                  |
+| `message`   | `Validation errors in CreateDelegatedPayment request.`            | 
+| `errors`    | Array of strings containing additional informations.              |
+
+## Example Usage
+
+```js
+const response = await fetch('https://api.decash.com/CreateDelegatedWallet', {
+  method: 'POST',
+  body: JSON.stringify({
+    owner: 'LX2XVJP7F5TQVOJ6DL4NPR5RH77XEG5US76WL7LIJL7OW6YPXDNPGIFWPM',
+  })
+});
+const data = await response.json();
+```
+
+## Example Success Response
+
+```json
+{
+  "wallet": "V55LRWVEWZCXO5Z5A6LVEF4DK2AWE7VWKVUKBA6ZWCMA55ODBZKSDDQRBU"
+}
+```

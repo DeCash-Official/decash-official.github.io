@@ -1,0 +1,59 @@
+---
+sidebar_position: 2
+---
+
+import CenteredImage from '/src/components/CenteredImage';
+
+
+# Prepare your wallet
+
+For the development and testing purposes, you will need the Algorand wallet. See the list
+of available Algorand wallets [here](/docs/concepts/algorand#wallets); you can choose from
+the mobile, browser-based or browser extension wallets.
+
+
+## Opt in to DeCash tokens
+
+:::tip
+This guide is only applicable to regular Algorand wallets. When using [DeCash API](/docs/api/overview)
+and [delegated wallets](/docs/concepts/delegated-wallets), the opt-in procedure is handled for you by
+DeCash API. Read more in the [API](/docs/api/overview) section.
+:::
+
+In order to receive [DeCash tokens](/docs/concepts/tokens) to your newly created wallet, you need
+to [opt them in](https://developer.algorand.org/docs/get-details/asa/#receiving-an-asset).
+
+The following guide will guide you through the [Algorand Wallet](https://algorandwallet.com/).
+The procedure in other wallets should be very similar.
+
+### 1. Get some Algo
+
+See the [Getting Algo](/docs/getting-started/getting-algo) section to get some Algo. You need to have
+some Algo on your wallet to perform the opt-in transaction in Algorand.
+
+### 2. Start adding a new asset
+
+Make sure you have your wallet set to use the correct [network](/docs/concepts/algorand#networks). On
+the screenshots below, the **test Algorand network** is used. See how to connect Algorand Wallet to the
+test network [here](https://algorandwallet.com/support/develop-help-articles/connecting-to-testnet/).
+
+<CenteredImage alt="Add DeCash token asset" src="/img/algorand-wallet-add-asset-1.png" width={392}/>
+
+### 3. Find DeCash token you need
+
+Using [this list](/docs/concepts/tokens#token-addresses) of DeCash tokens, pick the **asset ID** of the
+token you need. In the example below, we add **DeCash EURD** token, which has asset ID `51987793`.
+
+<CenteredImage alt="Add DeCash EURD token" src="/img/algorand-wallet-add-asset-2.png" width={392}/>
+
+### 4. Approve the opt-in transaction
+
+Now click on the asset you're trying to opt in to in your Algorand Wallet and approve the transaction.
+
+<CenteredImage alt="Confirm adding DeCash EURD token" src="/img/algorand-wallet-add-asset-3.png" width={392}/>
+
+Shortly, you will have DeCash token listed in the list of tokens you own.
+
+<CenteredImage alt="Confirm adding DeCash EURD token" src="/img/algorand-wallet-add-asset-4.png" width={392}/>
+
+From now on, you can start transacting in DeCash EURD token.

@@ -1,0 +1,66 @@
+---
+sidebar_position: 1
+---
+
+
+# Installation
+
+When working with [DeCash API](/docs/api/overview), you will need a library to talk to it, as well
+as the [SDK](https://developer.algorand.org/docs/sdks/javascript/) to manage Algorand wallets and
+sign transactions, as [DeCash tokens](/docs/concepts/tokens) are Algorand assets.
+
+We will use JavaScript and NodeJS in the examples below, but effectively you can utilize any language
+Algorand provides their [SDK](https://developer.algorand.org/docs/) for.
+
+
+## Algosdk
+
+Algosdk is used to handle Algorand wallets and sign transactions provided by DeCash API.
+
+You can add [algosdk](https://www.npmjs.com/package/algosdk) to your JavaScript project by running the
+following command:
+
+```bash npm2yarn
+npm install algosdk
+```
+
+Read more about how to sign transaction using algosdk and wallets in [signing transactions](/docs/getting-started/signing-transactions).
+
+
+## Talking to DeCash API
+
+For simplicity, we will demonstrate some examples of talking to DeCash API using [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+(or [node-fetch](https://www.npmjs.com/package/node-fetch) for NodeJS).
+
+When talking to DeCash API from the browser, you can use `fetch()` without installing any
+dependencies, while in NodeJS environment you would need to first install `node-fetch` and
+then import it:
+
+```bash npm2yarn
+npm install node-fetch
+```
+
+```js
+import fetch from 'node-fetch';
+```
+
+An example API invocation would be:
+
+```js
+const response = await fetch('https://api.decash.com/CreateDelegatedWallet', {
+  method: 'POST',
+  body: JSON.stringify({
+    "owner": "6E63EKJYUPLL4SKM5FNX3PD7HSWZ26XPS7BXYLVWJAPDEK3VA7DERTFV4E"
+  })
+});
+const data = await response.json();
+```
+
+Where `data` is now the following JSON object, having a generated delegated wallet you
+can use further in other API calls:
+
+```json
+{
+  "wallet": "DUIUUAOHRAUHVE5GXDE6OURUFWVXXFNSCOK3IMGWCZWSAASSM342O4YMAY",
+}
+```

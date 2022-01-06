@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Algorand ecosystem
 
-[DeCash tokens](../tokens/) use [Algorand](https://www.algorand.com/) blockchain. Comparing to [Ethereum](https://ethereum.org/en/),
+[DeCash tokens](/docs/concepts/tokens) use [Algorand](https://www.algorand.com/) blockchain. Comparing to [Ethereum](https://ethereum.org/en/),
 Algorand has these advantages:
 
 + Low fees, which equal to fractions of a penny.
@@ -19,7 +19,7 @@ manage any [Algorand Wallet](#wallets) of their choice.
 
 ## Wallets
 
-In order to use and transact in [DeCash tokens](../tokens), you need to obtain any Algorand wallet. Pick any of the
+In order to use and transact in [DeCash tokens](/docs/concepts/tokens), you need to obtain any Algorand wallet. Pick any of the
 [existing wallets](https://www.google.com/search?q=algorand+wallet) supporting [WalletConnect](https://walletconnect.com/):
 
 + [Algorand official wallet](https://algorandwallet.com/) (mobile app)
