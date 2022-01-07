@@ -24,13 +24,16 @@ Returned when the parameters are invalid
 | ----------- | ----------------------------------------------------------------- |
 | Status code | 400                                                               |
 | `errorId`   | `INVALID_PARAMS`                                                  |
-| `message`   | `Validation errors in CreateDelegatedPayment request.`            | 
+| `message`   | `Validation errors in CreateDelegatedWallet request.`             | 
 | `errors`    | Array of strings containing additional informations.              |
 
 ## Example Usage
 
+<Tabs>
+<TabItem value="js" label="JavaScript">
+
 ```js
-const response = await fetch('https://api.decash.com/CreateDelegatedWallet', {
+const response = await fetch('https://delegator-dev01b.arringo.co/api-test/CreateDelegatedWallet', {
   method: 'POST',
   body: JSON.stringify({
     owner: 'LX2XVJP7F5TQVOJ6DL4NPR5RH77XEG5US76WL7LIJL7OW6YPXDNPGIFWPM',
@@ -39,10 +42,13 @@ const response = await fetch('https://api.decash.com/CreateDelegatedWallet', {
 const data = await response.json();
 ```
 
+</TabItem>
+</Tabs>
+
 ## Example Success Response
 
 ```json
 {
-  "wallet": "V55LRWVEWZCXO5Z5A6LVEF4DK2AWE7VWKVUKBA6ZWCMA55ODBZKSDDQRBU"
+  "wallet": "I6DDMBWHBYARMXTGAJMQUHDMLEZOUD37FGGP62FOQOCXTFAQJ6PILHDV4Y"
 }
 ```

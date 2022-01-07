@@ -6,8 +6,8 @@ Submits a previously issued transaction group that has been signed by the user.
 
 |     Name    |                Type               | Description |
 | ----------- | --------------------------------- | ----------- |
-| `unsigned`  | `string[]`                        | The array of transactions (previously returned in the `noSign` array) that have not been signed. |
-| `signed`    | `string[]`                        | The array of transactions (previously returned in the `toSign` array) that have been signed by the user. |
+| `unsigned`  | `string[]`                        | The array of transactions that have not been signed (the transactions returned with an empty `signers` array). |
+| `signed`    | `string[]`                        | The array of transactions that have been signed by the user (with the keys of the accounts in the `signers` array). |
 
 ## Responses
 
@@ -40,8 +40,11 @@ Returned when the parameters are invalid.
 
 ## Example Usage
 
+<Tabs>
+<TabItem value="js" label="JavaScript">
+
 ```js
-const response = await fetch('https://api.decash.com/TransferFunds', {
+const response = await fetch('https://delegator-dev01b.arringo.co/api-test/SubmitTransaction', {
   method: 'POST',
   body: JSON.stringify({
     'unsigned': [
@@ -56,6 +59,9 @@ const response = await fetch('https://api.decash.com/TransferFunds', {
 });
 const data = await response.json();
 ```
+
+</TabItem>
+</Tabs>
 
 ## Example Success Response
 

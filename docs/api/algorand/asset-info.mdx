@@ -14,7 +14,7 @@ Returns information about every supported token (or about the queried `assetId` 
 
 |     Name    |                           Type                          | Description |
 | ----------- | ------------------------------------------------------- | ----------- | 
-| `info`      | `Array<{assetId:string, asaId:number, baseFee:number}>` | The array of asset properties. The field `assetId` contains the DeCash Asset ID (e.g. `usdd`); the field `asaId` contains the ID of the actual [algorand asset](../../concepts/tokens#token-addresses) (e.g. 51987792); the field `baseFee` contains the amount that must be paid (of this specific asset) by the sender for each sender-receiver pair. |
+| `info`      | `Array<{assetId:string, asaId:number, baseFee:number}>` | The array of asset properties. The field `assetId` contains the DeCash Asset ID (e.g. `USDD`); the field `asaId` contains the ID of the actual [algorand asset](../../concepts/tokens#token-addresses) (e.g. 51987792); the field `baseFee` contains the amount that must be paid (of this specific asset) by the sender for each sender-receiver pair. |
 
 ### Validation errors
 
@@ -29,20 +29,26 @@ Returned when the parameters are invalid.
 
 ## Example Usage
 
+<Tabs>
+<TabItem value="js" label="JavaScript">
+
 ```js
-const response = await fetch('https://api.decash.com/TransferFunds', {
+const response = await fetch('https://delegator-dev01b.arringo.co/api-test/AssetInfo', {
   method: 'POST',
   body: JSON.stringify({
-    'assetId': 'usdd',
+    'assetId': 'USDD',
   })
 });
 const data = await response.json();
 ```
 
+</TabItem>
+</Tabs>
+
 ## Example Success Response
 
 ```json
 {
-	"info": [{"assetId": "usdd", "asaId": 51987792, "baseFee": 0.01}]
+	"info": [{"assetId": "USDD", "asaId": 51987792, "baseFee": 0.01}]
 }
 ```

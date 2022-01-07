@@ -52,7 +52,7 @@ Returned when the sender does not have enough funds to pay both the transfer of 
 
 ### Receiver not opted in
 
-Returned when a user is sending funds to a non-[DelegatedWallet](#TODO) account that has not yet opted into the token that is being sent.
+Returned when a user is sending funds to a non-[DelegatedWallet](/docs/concepts/delegated-wallets) account that has not yet opted into the token that is being sent.
 
 |     Name    |                              Content                              |
 | ----------- | ----------------------------------------------------------------- |
@@ -62,32 +62,64 @@ Returned when a user is sending funds to a non-[DelegatedWallet](#TODO) account 
 
 ## Example Usage
 
+<Tabs>
+<TabItem value="js" label="JavaScript">
+
 ```js
-const response = await fetch('https://api.decash.com/TransferFunds', {
+const response = await fetch('https://delegator-dev01b.arringo.co/api-test/ManyToOneTransfer', {
   method: 'POST',
   body: JSON.stringify({
-    'assetId': 'usdd', 
+    'assetId': 'USDD',
     'senders': [{
-        'address': 'V55LRWVEWZCXO5Z5A6LVEF4DK2AWE7VWKVUKBA6ZWCMA55ODBZKSDDQRBU', 
-        'amount': 5
-      }, {
-        'address': 'YLCY7SE2XBY52EMOIBZAMXTSXPFVVECIQOHVBIWIR2Z5NT2QLLN2ADZZSE', 
-        'amount': 2.5
-    }], 
-    'receiver': 'KM64ZWNJ2BYHBBKL4AY35RGNT6NDF3QVD4ORFA2G4YNK4W67WPEMXFDDQU'
+      'address': 'NBGKLNZDHMHCL7UPDMQBZPUF3JGQI3355WD5JPDB3U2ODNLAW6SDPO67JE',
+      'amount': 5
+    }, {
+      'address': '5KZPR7ZLRZIVOQLPIBJJWM3N3MBTHHAFMK65NMZLJEJY4IHMDIH7WFFIOE',
+      'amount': 2.5
+    }],
+    'receiver': 'CNIOPGMZ3OSZLPEO7POGMVUEQVDV2RT3G4MSKGHRBX2SOPOEIOGBIFIMVQ'
   })
 });
 const data = await response.json();
 ```
 
+</TabItem>
+</Tabs>
+
 ## Example Success Response
 
 ```json
 {
-  "noSign": ["iqNhbXTOAAMNQKNmZWXNF3CiZnbOARszDaNnZW6sdGVzdG5ldC12MS4womdoxCBIY7UYpLPITsgQ8i1PEIHLD3HwWaesIN7GL39w5Qk6IqNncnDEIDnKTZuJLbfcljHVYwvzhi6+i0G1gm3aJ/rvN0BsCOMkomx2zgEbNvWjcmN2xCBTPczZqdBwcIVL4DG+xM2fmjLuFR8dEoNG5hquW9+zyKNzbmTEIGvkIhQ8kyZFK6yPPqxPgOpyqgq3DUTTf62WCXzMNcePpHR5cGWjcGF5", "iaRhcmN2xCBTPczZqdBwcIVL4DG+xM2fmjLuFR8dEoNG5hquW9+zyKJmds4BGzMNo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToio2dycMQgOcpNm4ktt9yWMdVjC/OGLr6LQbWCbdon+u83QGwI4ySibHbOARs29aNzbmTEIFM9zNmp0HBwhUvgMb7EzZ+aMu4VHx0Sg0bmGq5b37PIpHR5cGWlYXhmZXKkeGFpZM4DGUVQ", "iqRhYW10AqRhcmN2xCBr5CIUPJMmRSusjz6sT4DqcqoKtw1E03+tlgl8zDXHj6Jmds4BGzMNo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToio2dycMQgOcpNm4ktt9yWMdVjC/OGLr6LQbWCbdon+u83QGwI4ySibHbOARs29aNzbmTEIK96uNqktkV3dz0Hl1IXg1aBYn62VWigg9mwmA71ww5VpHR5cGWlYXhmZXKkeGFpZM4DGUVQ", "iqRhYW10zQHzpGFyY3bEIFM9zNmp0HBwhUvgMb7EzZ+aMu4VHx0Sg0bmGq5b37PIomZ2zgEbMw2jZ2VurHRlc3RuZXQtdjEuMKJnaMQgSGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiKjZ3JwxCA5yk2biS233JYx1WML84YuvotBtYJt2if67zdAbAjjJKJsds4BGzb1o3NuZMQgr3q42qS2RXd3PQeXUheDVoFifrZVaKCD2bCYDvXDDlWkdHlwZaVheGZlcqR4YWlkzgMZRVA=", "iqRhYW10zPukYXJjdsQgUz3M2anQcHCFS+AxvsTNn5oy7hUfHRKDRuYarlvfs8iiZnbOARszDaNnZW6sdGVzdG5ldC12MS4womdoxCBIY7UYpLPITsgQ8i1PEIHLD3HwWaesIN7GL39w5Qk6IqNncnDEIDnKTZuJLbfcljHVYwvzhi6+i0G1gm3aJ/rvN0BsCOMkomx2zgEbNvWjc25kxCDCxY/Imrhx3RGOQHIGXnK7y1qQSIOPUKLIjrPWz1Ba26R0eXBlpWF4ZmVypHhhaWTOAxlFUA=="],
-  "toSign": ["iKJmds4BGzMNo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToio2dycMQgOcpNm4ktt9yWMdVjC/OGLr6LQbWCbdon+u83QGwI4ySibHbOARs29aNyY3bEIF31eqX/L2cKuT4a+NfHsT//chu0l/1l/WhK/ut7D7jao3NuZMQgXfV6pf8vZwq5Phr418exP/9yG7SX/WX9aEr+63sPuNqkdHlwZaNwYXk="], 
-  "info": {
-    "asaFee": 0.02
-  }
+  "txns": [
+    {
+      "txn": "iqNhbXTOAAGGoKNmZWXNG1iiZnbOASGD46NnZW6sdGVzdG5ldC12MS4womdoxCBIY7UYpLPITsgQ8i1PEIHLD3HwWaesIN7GL39w5Qk6IqNncnDEIAI+pMgc52yXFnTJYkQeo4naJuyfh7HvRYCHvHRhIc+domx2zgEhh8ujcmN2xCDM12b3NSoTfJdJSzDDROUq3CiWPHHdXRqae4X/G6GZuqNzbmTEIGvkIhQ8kyZFK6yPPqxPgOpyqgq3DUTTf62WCXzMNcePpHR5cGWjcGF5",
+      "signers": []
+    },
+    {
+      "txn": "iaNhbXTOAAGGoKJmds4BIYPjo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToio2dycMQgAj6kyBznbJcWdMliRB6jidom7J+Hse9FgIe8dGEhz52ibHbOASGHy6NyY3bEIFOjz4p+f+5ipuxNu+El3rWI28uHGXuOGwebJt4Yw95Mo3NuZMQga+QiFDyTJkUrrI8+rE+A6nKqCrcNRNN/rZYJfMw1x4+kdHlwZaNwYXk=",
+      "signers": []
+    },
+    {
+      "txn": "iqRhYW10AqRhcmN2xCBr5CIUPJMmRSusjz6sT4DqcqoKtw1E03+tlgl8zDXHj6Jmds4BIYPjo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToio2dycMQgAj6kyBznbJcWdMliRB6jidom7J+Hse9FgIe8dGEhz52ibHbOASGHy6NzbmTEIGhMpbcjOw4l/o8bIBy+hdpNBG997YfUvGHdNOG1YLekpHR5cGWlYXhmZXKkeGFpZM4DGUVQ",
+      "signers": []
+    },
+    {
+      "txn": "iqRhYW10zQHzpGFyY3bEIBNQ55mZ26WVvI773GZWhIVHXUZ7NxklGPEN9Sc9xEOMomZ2zgEhg+OjZ2VurHRlc3RuZXQtdjEuMKJnaMQgSGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiKjZ3JwxCACPqTIHOdslxZ0yWJEHqOJ2ibsn4ex70WAh7x0YSHPnaJsds4BIYfLo3NuZMQgaEyltyM7DiX+jxsgHL6F2k0Eb33th9S8Yd004bVgt6SkdHlwZaVheGZlcqR4YWlkzgMZRVA=",
+      "signers": []
+    },
+    {
+      "txn": "iqRhYW10zPukYXJjdsQgE1DnmZnbpZW8jvvcZlaEhUddRns3GSUY8Q31Jz3EQ4yiZnbOASGD46NnZW6sdGVzdG5ldC12MS4womdoxCBIY7UYpLPITsgQ8i1PEIHLD3HwWaesIN7GL39w5Qk6IqNncnDEIAI+pMgc52yXFnTJYkQeo4naJuyfh7HvRYCHvHRhIc+domx2zgEhh8ujc25kxCDqsvj/K45RV0FvQFKbM23bAzOcBWK91rMrSROOIOwaD6R0eXBlpWF4ZmVypHhhaWTOAxlFUA==",
+      "signers": []
+    },
+    {
+      "txn": "iaVjbG9zZcQga+QiFDyTJkUrrI8+rE+A6nKqCrcNRNN/rZYJfMw1x4+iZnbOASGD46NnZW6sdGVzdG5ldC12MS4womdoxCBIY7UYpLPITsgQ8i1PEIHLD3HwWaesIN7GL39w5Qk6IqNncnDEIAI+pMgc52yXFnTJYkQeo4naJuyfh7HvRYCHvHRhIc+domx2zgEhh8ujcmN2xCBr5CIUPJMmRSusjz6sT4DqcqoKtw1E03+tlgl8zDXHj6NzbmTEIMzXZvc1KhN8l0lLMMNE5SrcKJY8cd1dGpp7hf8boZm6pHR5cGWjcGF5",
+      "signers": ["ZTLWN5ZVFIJXZF2JJMYMGRHFFLOCRFR4OHOV2GU2POC76G5BTG5DOBVU3E"]
+    },
+    {
+      "txn": "iaVjbG9zZcQga+QiFDyTJkUrrI8+rE+A6nKqCrcNRNN/rZYJfMw1x4+iZnbOASGD46NnZW6sdGVzdG5ldC12MS4womdoxCBIY7UYpLPITsgQ8i1PEIHLD3HwWaesIN7GL39w5Qk6IqNncnDEIAI+pMgc52yXFnTJYkQeo4naJuyfh7HvRYCHvHRhIc+domx2zgEhh8ujcmN2xCBr5CIUPJMmRSusjz6sT4DqcqoKtw1E03+tlgl8zDXHj6NzbmTEIFOjz4p+f+5ipuxNu+El3rWI28uHGXuOGwebJt4Yw95MpHR5cGWjcGF5",
+      "signers": ["KOR47CT6P7XGFJXMJW56CJO6WWENXS4HDF5Y4GYHTMTN4GGD3ZGHVEX4BY"]
+    }
+  ],
+  "info": { "asaFee": 0.02 }
 }
 ```
