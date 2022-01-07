@@ -7,7 +7,7 @@ import CenteredImage from '/src/components/CenteredImage';
 
 # Merchandise store
 
-This article will guide you through the example of building the merchandise store using DeCash tokens.
+This page will guide you through the example of building the merchandise store using DeCash tokens.
 In this article, we call a store which sells goods the "merchant", and a "customer" is one who makes a
 purchase in this store.
 
@@ -29,7 +29,7 @@ represented by the following sequence diagram:
    They receive an address like `6E63EKJYUPLL4SKM5FNX3PD7HSWZ26XPS7BXYLVWJAPDEK3VA7DERTFV4E`, which is then
    optionally displayed to the customer.
    + When deciding who is an owner of [CreateDelegatedWallet](/docs/api/algorand/create-delegated-wallet), note that it would
-     be the hot wallet you generate or store on your back end and later use to [sign](/docs/getting-started/signing-transactions)
+     be the hot wallet you generate or store on your back end and later use to [sign](/docs/guides/signing-transactions)
      [ManyToOneTransfer](/docs/api/algorand/many-to-one-transfer) transactions from it, thus being able to collect DeCash tokens
      from multiple Delegated Wallets.
    + If you don't want all Delegated Wallets to be associated with a single owner (which is visible in blockchain),
@@ -40,7 +40,7 @@ represented by the following sequence diagram:
      and asks the customer to sign the returned [toSign](/docs/api/algorand/create-delegated-payment#regular-response)
      transaction with their Algorand wallet. When signing the transaction, a transaction fee in DeCash tokens
      is displayed to the user.
-4. The customer signs the transaction. See [signing transactions](/docs/getting-started/signing-transactions)
+4. The customer signs the transaction. See [signing transactions](/docs/guides/signing-transactions)
    to learn more how they can do it for different wallets.
 5. The signed transaction is sent back to DeCash API via the [SubmitTransaction](/docs/api/algorand/submit-transaction)
    endpoint.

@@ -1,11 +1,17 @@
 ---
-sidebar_position: 4
+sidebar_position: 1
 ---
 
-# Signing transactions
-Before being able to submit transactions, you (or the user who owns the account from which the funds are being spent) need to sign them. For each different way in which you can create a wallet and maintain an account, there is a way to sign transactions.
+import CenteredImage from '/src/components/CenteredImage';
 
-For simplicity, in all of the following cases let us consider a transaction obtained from the following function:
+
+# Signing transactions
+Before being able to submit transactions, you (or the user who owns the account from which the funds are being spent)
+need to sign them. For each different way in which you can create a wallet and maintain an account, there is a way
+to sign transactions.
+
+For simplicity, in all of the following cases let us consider a transaction obtained from the following [NodeJS](https://nodejs.org/en/)
+function:
 
 ```js
 async function getTransactions(from) {
@@ -80,11 +86,10 @@ if (!wallet.connected) {
 }
 ```
 
-In the meanwhile, the user will be able to open up the Algorand Wallet app, and scan the QR code
+In the meanwhile, the user will be able to open up the Algorand Wallet app, and scan the QR code:
 
-<img src="/img/algorandwallet_home.jpg" height="500px"/>
-<img src="/img/algorandwallet_scan.jpg" height="500px"/>
-<img src="/img/algorandwallet_connect.jpg" height="500px"/>
+<CenteredImage alt="Algorand wallet connect" src="/img/algorandwallet_connectflow.png"/>
+
 
 ### Getting the account address
 Now that we have an instance of WalletConnect open, it is possible to get the connected account by running
@@ -114,9 +119,7 @@ const result = await wallet.sendCustomRequest({
 
 When the request is sent, the application will show a request to sign a group of transactions. 
 
-<img src="/img/algorandwallet_sign.jpg" height="500px"/>
-<img src="/img/algorandwallet_moreinfo.jpg" height="500px"/>
-<img src="/img/algorandwallet_confirm.jpg" height="500px"/>
+<CenteredImage alt="Algorand wallet confirm transaction" src="/img/algorandwallet_confirmflow.png"/>
 
 Once signed, an array of transactions is returned. However, this array must be filtered in order to remove the transactions that were not signed, and to correctly encode the ones that were:
 
@@ -148,15 +151,17 @@ Then, by using that instance, it is possible to run
 const accounts = (await wallet.connect()).map(account => account.address);
 ```
 
-to connect to the wallet and get the addresses of all connected accounts. When run, the user will be prompted with a popup asking for their wallet's password
+to connect to the wallet and get the addresses of all connected accounts. When run, the user will be prompted
+with a popup asking for their wallet's password:
 
-<img src="/img/myalgoconnect_connect.png" height="500px"/>
+<CenteredImage alt="Connect to MyAlgoWallet" src="/img/myalgoconnect_connect.png" width={300}/>
 
-After inserting their password, the prompt will ask the user to choose which accounts to connect
+After inserting their password, the prompt will ask the user to choose which accounts to connect:
 
-<img src="/img/myalgoconnect_select.png" height="500px"/>
+<CenteredImage alt="Select wallet in MyAlgoWallet" src="/img/myalgoconnect_select.png" width={300}/>
 
-### Signing the tranasctions
+
+### Signing the transactions
 
 To sign the transactions, the `signTransaction` method can be used, but first, an array containing only the transactions that must be signed, needs to be created.
 
@@ -167,7 +172,7 @@ const result = await wallet.signTransaction(toSign)
 
 When run, a popup wil appear, asking the user to confirm if they are fine with signing the shown transaction. Once accepted, the user is asked once more for their password.
 
-<img src="/img/myalgoconnect_sign.png" height="500px"/>
+<CenteredImage alt="Sign with AlgoSigner" src="/img/myalgoconnect_sign.png" width={300}/>
 
 Once signed, it is possible to encode the signed transactions to base64
 
@@ -178,9 +183,11 @@ const signed = result.map(({blob}) => btoa(String.fromCharCode.apply(null, blob)
 
 so that they can be sent to the `SubmitTransaction` endpoint.
 
+
 ## Signing with AlgoSigner
 
 The last wallet for which we'll show how to sign transactions is AlgoSigner. Since AlgoSigner injects itself into the `window` object, we do not need to import any library.
+
 
 ### Connecting to the wallet
 
@@ -192,9 +199,10 @@ await AlgoSigner.connect();
 
 When run, a pop-up will appear, asking the user to enter their password, and to confirm that they actually want to connect the wallet to the website, enabling it to read the list of accounts, and send requests to sign transactions.
 
-<img src="/img/algosigner_connect.png" height="500px"/>
+<CenteredImage alt="Connecting to AlgoSigner" src="/img/algosigner_connect.png" width={300}/>
 
 Note that no instance of the wallet is returned. The AlgoSigner object will instead be used for all following operations.   
+
 
 ### Getting the addresses
 
@@ -203,6 +211,7 @@ To get the addresses of all connected accounts, the function `AlgoSigner.account
 ```js
 const accounts = await AlgoSigner.accounts({ledger: 'TestNet'}).map(account => account.address);
 ```
+
 
 ### Signing the transactions
 
@@ -217,14 +226,13 @@ const signed = (await AlgoSigner.signTxn(txns))
 
 When run, a pop-up will ask to confirm each transaction, and then for the user's password.
 
-<img src="/img/algosigner_accept1.png" height="500px"/>
-<img src="/img/algosigner_accept2.png" height="500px"/>
-<img src="/img/algosigner_accept3.png" height="500px"/>
-<img src="/img/algosigner_confirm.png" height="500px"/>
+<CenteredImage alt="Sign with AlgoSigner" src="/img/algosigner_sign.png" width={600}/>
+
 
 ## Signing with the KMD
 
 Next, let us take a look at how to sign transactions with the [KMD](https://developer.algorand.org/docs/clis/kmd/).
+
 
 ### Connecting to the KMD
 
