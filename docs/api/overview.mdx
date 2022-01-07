@@ -7,7 +7,13 @@ import TOCInline from '@theme/TOCInline';
 
 # Overview
 
-DeCash API is currently a public API anyone can work with.
+:::warning
+DeCash currently released an **alpha** version of its API for testing. This API may receive breaking changes
+at any moment.
+:::
+
+DeCash API is the RPC-like API. It uses `POST` methods only and accepts/responds with `application/json`
+body content types.
 
 
 ## Using this API
@@ -21,6 +27,7 @@ DeCash API is currently in alpha testing phase. You can talk to API using the fo
 ## API methods
 
 + [AssetInfo](/docs/api/algorand/asset-info)
++ [CheckTransaction](/docs/api/algorand/check-transaction)
 + [CloseDelegatedWallet](/docs/api/algorand/close-delegated-wallet)
 + [CreateDelegatedPayment](/docs/api/algorand/create-delegated-payment)
 + [CreateDelegatedWallet](/docs/api/algorand/create-delegated-wallet)
