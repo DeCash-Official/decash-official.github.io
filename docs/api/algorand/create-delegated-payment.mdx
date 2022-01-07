@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 | `assetId`         | `string` | The ID of the DeCash asset that is being sent. |
 | `sender.address`  | `string` | The address of the account that is sending the funds. Note that this account must have enough funds to cover both the amount that is being sent, and the [fee](#TODO). |
 | `sender.amount`   | `number` | The amount that is being sent. |
-| `receiver`        | `string` | The address of the account that is receiving the funds. Note that, if this account is not a [DelegatedWallet](/docs/concepts/delegated-wallets), then it must be opted into the token that is being sent. | 
+| `receiver`        | `string` | The address of the account that is receiving the funds. Note that, if this account is not a [Delegated Wallet](/docs/concepts/delegated-wallets), then it must be opted into the token that is being sent. | 
 
 ## Responses
 
@@ -54,7 +54,7 @@ Returned when the sender does not have enough funds to pay both the transfer of 
 
 ### Receiver not opted in
 
-Returned when a user is sending funds to a non-[DelegatedWallet](/docs/concepts/delegated-wallets) account that has not yet opted into the token that is being sent.
+Returned when a user is sending funds to a non-[Delegated Wallet](/docs/concepts/delegated-wallets) account that has not yet opted into the token that is being sent.
 
 |     Name    |                              Content                              |
 | ----------- | ----------------------------------------------------------------- |

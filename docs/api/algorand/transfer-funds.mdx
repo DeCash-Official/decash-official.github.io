@@ -1,14 +1,14 @@
 # TransferFunds
 
-Send funds from a [DelegatedWallet](/docs/concepts/delegated-wallets), to another (regular or delegated) wallet.
+Send funds from a [Delegated Wallet](/docs/concepts/delegated-wallets), to another (regular or delegated) wallet.
 
 ## Request Parameters
 
 |     Name    |                Type               | Description |
 | ----------- | --------------------------------- | ----------- |
 | `assetId`   | `string`                          | The ID of the DeCash asset that is being sent. |
-| `sender`    | `{address:string, amount:number}` | Object containing the `address` of the DelegatedWallet that is sending the funds, and the `amount` that is being sent. Note that this account must have enough funds to cover both the `amount`, and the [fee](#TODO). |
-| `receiver`  | `string`                          | The address of the account that is receiving the funds. Note that, if this account is not a DelegatedWallet, then it must be opted into the token that is being sent. | 
+| `sender`    | `{address:string, amount:number}` | Object containing the `address` of the Delegated Wallet that is sending the funds, and the `amount` that is being sent. Note that this account must have enough funds to cover both the `amount`, and the [fee](#TODO). |
+| `receiver`  | `string`                          | The address of the account that is receiving the funds. Note that, if this account is not a Delegated Wallet, then it must be opted into the token that is being sent. | 
 
 ## Responses
 
@@ -52,7 +52,7 @@ Returned when the sender does not have enough funds to pay both the transfer of 
 
 ### Receiver not opted in
 
-Returned when a user is sending funds to a non-[DelegatedWallet](/docs/concepts/delegated-wallets) account that has not yet opted into the token that is being sent.
+Returned when a user is sending funds to a non-[Delegated Wallet](/docs/concepts/delegated-wallets) account that has not yet opted into the token that is being sent.
 
 |     Name    |                              Content                              |
 | ----------- | ----------------------------------------------------------------- |
