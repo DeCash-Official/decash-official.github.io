@@ -1,16 +1,60 @@
 # CheckTransaction
 
-Checks the status of a previously submitted transaction. Normally, transactions are mined within 1-5 seconds on the Algorand
-blockchain, but it can take a while longer if the blockchain is busy at the moment.
+:::warning
+This API endpoint is not yet implemented
+:::
+
+Checks the status of a previously submitted transaction. Normally, transactions are finalized within 1-5 seconds on the Algorand blockchain, but it can take a while longer if the blockchain is busy at the moment.
 
 
 ## Request Parameters
 
 |     Name    |                Type               | Description |
 | ----------- | --------------------------------- | ----------- |
-| `txId`      | `string`                          | The transaction ID received from the [SubmitTransaction](/docs/api/algorand/submit-transaction) method. |
+| `txId`      | `string`                          | A transaction ID received from the [SubmitTransaction](/docs/api/algorand/submit-transaction) method. |
 
 
 ## Responses
 
-This method is not yet implemented in the API.
+### Regular response
+
+|     Name    |   Type   | Description |
+| ----------- | -------- | ----------- | 
+| `status`    | `string` | The status of the checked transaction. Can be equal to "confirmed", "rejected", or "pending". |
+
+### Validation errors
+
+Returned when the parameters are invalid.
+
+|     Name    |                              Content                              |
+| ----------- | ----------------------------------------------------------------- |
+| Status code | 400                                                               |
+| `errorId`   | `INVALID_PARAMS`                                                  |
+| `message`   | `Validation errors in CheckTransaction request.`                  | 
+| `errors`    | Array of strings containing additional informations.              |
+
+
+## Example Usage
+
+<Tabs>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch('https://api.decash.com/CheckTransaction', {
+  method: 'POST',
+  body: JSON.stringify({
+    'txId': 'G4UDVVAOFUH6UZMPSP6TONQOHPPZEXLPT3DLK3ONNHLFSUQ6VB6Q'})
+});
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+## Example Success Response
+
+```json
+{
+  "status": "confirmed"
+}
+```
