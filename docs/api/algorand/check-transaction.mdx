@@ -20,7 +20,7 @@ Checks the status of a previously submitted transaction. Normally, transactions 
 
 |     Name    |   Type   | Description |
 | ----------- | -------- | ----------- | 
-| `status`    | `string` | The status of the checked transaction. Can be equal to "confirmed", "rejected", or "pending". |
+| `status`    | `string` | The status of the checked transaction. Is equal to: "confirmed" if the transaction has been finalized as approved; "pending" if the transaction has yet to be finalized; and "rejected" if the transaction was rejected from being included in a block (e.g. some funds were spent in another transaction, not leaving enough for the current one). |
 
 ### Validation errors
 
