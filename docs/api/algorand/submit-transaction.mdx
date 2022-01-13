@@ -13,6 +13,12 @@ Submits a previously issued transaction group that has been signed by the user.
 
 ### Regular response
 
+:::caution
+
+It is very important to check if the transaction has been finalized by checking the (TransactionStatus)[/docs/api/algorand/transaction-status] endpoint after submission to avoid double spending. (Transactions are usually finalized in less than 10 seconds.)
+
+:::
+
 |     Name    |         Type        | Description |
 | ----------- | ------------------- | ----------- | 
 | `txIds`     | `string[]`          | The array of transaction ids of the transactions that have been submitted. |
