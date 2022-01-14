@@ -2,6 +2,12 @@
 
 Create a [Delegated Wallet](/docs/concepts/delegated-wallets), given an owner wallet that controls it.
 
+:::note
+When building systems using [Delegated Wallets](/docs/concepts/delegated-wallets), you should always assume that it's possible to
+get all Delegated Wallets by having the owner wallet address and vice versa. If you need to preserve higher privacy in your systems,
+prefer generating a unique owner address per each delegated wallet.
+:::
+
 ## Request Parameters
 
 |     Name    |         Type        | Description |
