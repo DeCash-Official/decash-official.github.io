@@ -1,0 +1,60 @@
+# TransactionStatus
+
+:::warning
+This API endpoint is not yet implemented
+:::
+
+Checks the status of a previously submitted transaction. Normally, transactions are finalized within 1-5 seconds on the Algorand blockchain, but it can take a while longer if the blockchain is busy at the moment.
+
+
+## Request Parameters
+
+|     Name    |                Type               | Description |
+| ----------- | --------------------------------- | ----------- |
+| `txId`      | `string`                          | A transaction ID received from the [SubmitTransaction](/docs/api/algorand/submit-transaction) method. |
+
+
+## Responses
+
+### Regular response
+
+|     Name    |   Type   | Description |
+| ----------- | -------- | ----------- | 
+| `status`    | `string` | The status of the checked transaction. Is equal to: "confirmed" if the transaction has been finalized as approved; "pending" if the transaction has yet to be finalized; and "rejected" if the transaction was rejected from being included in a block (e.g. some funds were spent in another transaction, not leaving enough for the current one). |
+
+### Validation errors
+
+Returned when the parameters are invalid.
+
+|     Name    |                              Content                              |
+| ----------- | ----------------------------------------------------------------- |
+| Status code | 400                                                               |
+| `errorId`   | `INVALID_PARAMS`                                                  |
+| `message`   | `Validation errors in TransactionStatus request.`                 | 
+| `errors`    | Array of strings containing additional informations.              |
+
+
+## Example Usage
+
+<Tabs>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch('https://api.decash.com/TransactionStatus', {
+  method: 'POST',
+  body: JSON.stringify({
+    'txId': 'G4UDVVAOFUH6UZMPSP6TONQOHPPZEXLPT3DLK3ONNHLFSUQ6VB6Q'})
+});
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+## Example Success Response
+
+```json
+{
+  "status": "confirmed"
+}
+```

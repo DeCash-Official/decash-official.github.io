@@ -13,6 +13,12 @@ Submits a previously issued transaction group that has been signed by the user.
 
 ### Regular response
 
+:::caution
+
+SubmitTransaction will send the blockchain transaction to the network without waiting for it to be confirmed. It is important to poll for the transaction status using (TransactionStatus)[/docs/api/algorand/transaction-status] API endpoint after it was submitted, ensuring its status is "confirmed". Normally, transactions are confirmed within 5-10 seconds.
+
+:::
+
 |     Name    |         Type        | Description |
 | ----------- | ------------------- | ----------- | 
 | `txIds`     | `string[]`          | The array of transaction ids of the transactions that have been submitted. |
