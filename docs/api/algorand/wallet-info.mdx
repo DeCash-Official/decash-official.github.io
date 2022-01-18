@@ -1,0 +1,64 @@
+# WalletInfo
+
+:::warning
+This API endpoint is not yet implemented
+:::
+
+Returns the wallet balance and other information.
+
+## Request Parameters
+
+|     Name    |                Type               | Description |
+| ----------- | --------------------------------- | ----------- |
+| `address`   | `string`                          | The address of the wallet of which infos will be retrieved. |
+
+
+## Responses
+
+### Regular response
+
+|     Name    |          Type          | Description |
+| ----------- | ---------------------- | ----------- | 
+| `delegated` | `boolean`              | Is equal to true if the wallet is a [Delegated Wallet](/docs/concepts/delegated-wallets). |
+| `balance`   | `{[k:string]: number}` | Key value pair containing the balance of every held DeCash asset. |
+
+### Validation errors
+
+Returned when the parameters are invalid.
+
+|     Name    |                              Content                              |
+| ----------- | ----------------------------------------------------------------- |
+| Status code | 400                                                               |
+| `errorId`   | `INVALID_PARAMS`                                                  |
+| `message`   | `Validation errors in WalletInfo request.`                        | 
+| `errors`    | Array of strings containing additional informations.              |
+
+
+## Example Usage
+
+<Tabs>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch('https://api.decash.com/WalletInfo', {
+  method: 'POST',
+  body: JSON.stringify({
+    'address': 'V55LRWVEWZCXO5Z5A6LVEF4DK2AWE7VWKVUKBA6ZWCMA55ODBZKSDDQRBU'})
+});
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+## Example Success Response
+
+```json
+{
+  "delegated": true,
+  "balance": {
+    "USDD": 45.32,
+    "EURD": 15.10,
+  }
+}
+```
