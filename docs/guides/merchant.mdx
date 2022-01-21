@@ -36,8 +36,8 @@ represented by the following sequence diagram:
      you can generate new owner wallets for each Delegated Wallet, and then use [CloseDelegatedWallet](/docs/api/algorand/close-delegated-wallet)
      to collect funds from each individual wallet, as ManyToOneTransfer works only for a single owner.
 3. The customer is then asked to make a payment to this address.
-   + Effectively, the merchant invokes [CreateDelegatedPayment](/docs/api/algorand/create-delegated-payment)
-     and asks the customer to sign the returned [toSign](/docs/api/algorand/create-delegated-payment#regular-response)
+   + Effectively, the merchant invokes [TransferTokens](/docs/api/algorand/transfer-tokens)
+     and asks the customer to sign the returned [toSign](/docs/api/algorand/transfer-tokens#regular-response)
      transaction with their Algorand wallet. When signing the transaction, a transaction fee in DeCash tokens
      is displayed to the user.
 4. The customer signs the transaction. See [signing transactions](/docs/guides/signing-transactions)

@@ -15,7 +15,7 @@ function:
 
 ```js
 async function getTransactions(from) {
-    const response = await fetch('https://delegator-dev01b.arringo.co/api-test/CreateDelegatedPayment', {
+    const response = await fetch('https://delegator-dev01b.arringo.co/api-test/TransferTokens', {
         method: 'POST',
         body: JSON.stringify({
             assetId: 'USDD',

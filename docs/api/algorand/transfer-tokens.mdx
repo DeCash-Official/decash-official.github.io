@@ -1,16 +1,14 @@
-# CreateDelegatedPayment
+# TransferTokens
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+Send DeCash from one wallet to another. This endpoint work for both regular and delegated wallets.
 
 ## Request Parameters
 
-|        Name       |   Type   | Description |
-| ----------------- | -------- | ----------- | 
-| `assetId`         | `string` | The ID of the DeCash asset that is being sent. |
-| `sender.address`  | `string` | The address of the account that is sending the funds. Note that this account must have enough funds to cover both the amount that is being sent, and the [fee](#TODO). |
-| `sender.amount`   | `number` | The amount that is being sent. |
-| `receiver`        | `string` | The address of the account that is receiving the funds. Note that, if this account is not a [Delegated Wallet](/docs/concepts/delegated-wallets), then it must be opted into the token that is being sent. | 
+|     Name    |                Type               | Description |
+| ----------- | --------------------------------- | ----------- |
+| `assetId`   | `string`                          | The ID of the DeCash asset that is being sent. |
+| `sender`    | `{address:string, amount:number}` | Object containing the `address` of the wallet that is sending the funds, and the `amount` that is being sent. Note that this account must have enough funds to cover both the `amount`, and the [fee](#TODO). |
+| `receiver`  | `string`                          | The address of the account that is receiving the funds. Note that, if this account is not a Delegated Wallet, then it must be opted into the token that is being sent. | 
 
 ## Responses
 
@@ -21,16 +19,16 @@ import TabItem from '@theme/TabItem';
 | `txns`      | `Array<{txn:string, signers:string[]}>` | Array of objects each containing a transaction (in msgpack) and an array of `signers` (a list of addresses of the accounts that must sign the transaction). Transactions with an empty `signers` array shall not be signed. |
 | `info`      | `{fee:number}`                          | An object containing `fee`, the amount of DeCash that is being spent on fees in this transaction. (e.g. 1.05 USDD) | 
 
-### Validation rerors
+### Validation errors
 
-Returned when the parameters are invalid
+Returned when the parameters are invalid.
 
 |     Name    |                              Content                              |
 | ----------- | ----------------------------------------------------------------- |
 | Status code | 400                                                               |
 | `errorId`   | `INVALID_PARAMS`                                                  |
-| `message`   | `Validation errors in CreateDelegatedPayment request.`            | 
-| `errors`    | Array of strings containing additional informations               |
+| `message`   | `Validation errors in TransferTokens request.`                     | 
+| `errors`    | Array of strings containing additional informations.              |
 
 ### Sender not opted in 
 
@@ -68,16 +66,15 @@ Returned when a user is sending funds to a non-[Delegated Wallet](/docs/concepts
 <TabItem value="js" label="JavaScript">
 
 ```js
-const response = await fetch('https://delegator-dev01b.arringo.co/api-test/CreateDelegatedPayment', {
+const response = await fetch('https://delegator-dev01b.arringo.co/api-test/TransferTokens', {
   method: 'POST',
   body: JSON.stringify({
-    assetId: 'USDD',
-    sender: {
-      address: 'LX2XVJP7F5TQVOJ6DL4NPR5RH77XEG5US76WL7LIJL7OW6YPXDNPGIFWPM',
-      amount: 14.50,
+    'assetId': 'USDD', 
+    'sender': {
+      'address': 'V55LRWVEWZCXO5Z5A6LVEF4DK2AWE7VWKVUKBA6ZWCMA55ODBZKSDDQRBU',
+      'amount': 12.99
     },
-    receiver: 'CNIOPGMZ3OSZLPEO7POGMVUEQVDV2RT3G4MSKGHRBX2SOPOEIOGBIFIMVQ',
-  })
+    'receiver': 'YLCY7SE2XBY52EMOIBZAMXTSXPFVVECIQOHVBIWIR2Z5NT2QLLN2ADZZSE'})
 });
 const data = await response.json();
 ```
@@ -91,16 +88,20 @@ const data = await response.json();
 {
   "txns": [
     {
-      "txn": "iaNmZWXNC7iiZnbOASGDVKNnZW6sdGVzdG5ldC12MS4womdoxCBIY7UYpLPITsgQ8i1PEIHLD3HwWaesIN7GL39w5Qk6IqNncnDEIKquMRqA1/ly3YKipObbJ7v+U6eiy+gjCn5roE2PbjXqomx2zgEhhzyjcmN2xCATUOeZmdullbyO+9xmVoSFR11GezcZJRjxDfUnPcRDjKNzbmTEIGvkIhQ8kyZFK6yPPqxPgOpyqgq3DUTTf62WCXzMNcePpHR5cGWjcGF5",
+      "txn": "iqNhbXTOAAGGoKNmZWXND6CiZnbOASGEUKNnZW6sdGVzdG5ldC12MS4womdoxCBIY7UYpLPITsgQ8i1PEIHLD3HwWaesIN7GL39w5Qk6IqNncnDEIEb2Cre7tsl1gobXOwMfS5RuGGZr4Zv/+BnH4C71qQmNomx2zgEhiDijcmN2xCDM12b3NSoTfJdJSzDDROUq3CiWPHHdXRqae4X/G6GZuqNzbmTEIGvkIhQ8kyZFK6yPPqxPgOpyqgq3DUTTf62WCXzMNcePpHR5cGWjcGF5",
       "signers": []
     },
     {
-      "txn": "iqRhYW10AaRhcmN2xCBr5CIUPJMmRSusjz6sT4DqcqoKtw1E03+tlgl8zDXHj6Jmds4BIYNUo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToio2dycMQgqq4xGoDX+XLdgqKk5tsnu/5Tp6LL6CMKfmugTY9uNeqibHbOASGHPKNzbmTEIF31eqX/L2cKuT4a+NfHsT//chu0l/1l/WhK/ut7D7japHR5cGWlYXhmZXKkeGFpZM4DGUVQ",
-      "signers": ["LX2XVJP7F5TQVOJ6DL4NPR5RH77XEG5US76WL7LIJL7OW6YPXDNPGIFWPM"]
+      "txn": "iqRhYW10AaRhcmN2xCBr5CIUPJMmRSusjz6sT4DqcqoKtw1E03+tlgl8zDXHj6Jmds4BIYRQo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToio2dycMQgRvYKt7u2yXWChtc7Ax9LlG4YZmvhm//4GcfgLvWpCY2ibHbOASGIOKNzbmTEIGhMpbcjOw4l/o8bIBy+hdpNBG997YfUvGHdNOG1YLekpHR5cGWlYXhmZXKkeGFpZM4DGUVQ",
+      "signers": []
     },
     {
-      "txn": "iqRhYW10zQWqpGFyY3bEIBNQ55mZ26WVvI773GZWhIVHXUZ7NxklGPEN9Sc9xEOMomZ2zgEhg1SjZ2VurHRlc3RuZXQtdjEuMKJnaMQgSGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiKjZ3JwxCCqrjEagNf5ct2CoqTm2ye7/lOnosvoIwp+a6BNj2416qJsds4BIYc8o3NuZMQgXfV6pf8vZwq5Phr418exP/9yG7SX/WX9aEr+63sPuNqkdHlwZaVheGZlcqR4YWlkzgMZRVA=",
-      "signers": ["LX2XVJP7F5TQVOJ6DL4NPR5RH77XEG5US76WL7LIJL7OW6YPXDNPGIFWPM"]
+      "txn": "iqRhYW10zQHzpGFyY3bEIBNQ55mZ26WVvI773GZWhIVHXUZ7NxklGPEN9Sc9xEOMomZ2zgEhhFCjZ2VurHRlc3RuZXQtdjEuMKJnaMQgSGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiKjZ3JwxCBG9gq3u7bJdYKG1zsDH0uUbhhma+Gb//gZx+Au9akJjaJsds4BIYg4o3NuZMQgaEyltyM7DiX+jxsgHL6F2k0Eb33th9S8Yd004bVgt6SkdHlwZaVheGZlcqR4YWlkzgMZRVA=",
+      "signers": []
+    },
+    {
+      "txn": "iaVjbG9zZcQga+QiFDyTJkUrrI8+rE+A6nKqCrcNRNN/rZYJfMw1x4+iZnbOASGEUKNnZW6sdGVzdG5ldC12MS4womdoxCBIY7UYpLPITsgQ8i1PEIHLD3HwWaesIN7GL39w5Qk6IqNncnDEIEb2Cre7tsl1gobXOwMfS5RuGGZr4Zv/+BnH4C71qQmNomx2zgEhiDijcmN2xCBr5CIUPJMmRSusjz6sT4DqcqoKtw1E03+tlgl8zDXHj6NzbmTEIMzXZvc1KhN8l0lLMMNE5SrcKJY8cd1dGpp7hf8boZm6pHR5cGWjcGF5",
+      "signers": ["ZTLWN5ZVFIJXZF2JJMYMGRHFFLOCRFR4OHOV2GU2POC76G5BTG5DOBVU3E"]
     }
   ],
   "info": { "asaFee": 0.01 }
