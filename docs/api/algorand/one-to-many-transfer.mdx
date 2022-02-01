@@ -7,7 +7,7 @@ Send funds from a [Delegated Wallet](/docs/concepts/delegated-wallets), to multi
 |     Name    |                    Type                   | Description |
 | ----------- | ----------------------------------------- | ----------- | 
 | `assetId`   | `string`                                  | The ID of the DeCash asset that is being sent. |
-| `sender`    | `string`                                  | The address of the account that is sending the funds. Note that this account must have enough funds to cover both all the `amount`s, and the [fee](/docs/api/fees)s. **This array can be 4 addresses at max**. |
+| `sender`    | `string`                                  | The address of the account that is sending the funds. Note that this account must have enough funds to cover both all the `amount`s, and the [fees](/docs/api/fees). **This array can be 4 addresses at max**. |
 | `receivers` | `Array<{address:string, amount:number}>`  | Array of objects containing the `address` of the accounts that are receiving the funds, and the respective `amount`s that are being sent to them. Note that, if any of these accounts is not a Delegated Wallet, then it must be opted into the token that is being sent. |
 
 ## Responses
