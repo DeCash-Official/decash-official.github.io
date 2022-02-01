@@ -1,0 +1,20 @@
+---
+sidebar_position: 2
+---
+
+# Fees
+
+DeCash API takes a small fee for making transactions. This fee is withhold in the transaction amount currency: for instance,
+if you're transferring 10 EURD tokens from one account to another using the [TransferTokens](/docs/api/algorand/transfer-tokens)
+API endpoint, the sending account will be additionally charged 0.01 EURD.
+
+The fee is calculated by the DeCash API, so you don't need to worry about it. This fees are provided for reference only, if
+you want to calculate the fees for a high volume of transactions by yourself, when using many-to-one or one-to-many transfers.
+
+At the moment, DeCash API takes the same fee for all currencies. DeCash may update this fee from time to time.
+
+|     Name     | [TransferTokens](/docs/api/algorand/transfer-tokens) | [ManyToOneTransfer](/docs/api/algorand/many-to-one-transfer)      | [OneToManyTransfer](/docs/api/algorand/one-to-many-transfer)      |
+| -----------  | ---------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| USDD         | 0.01                                                 | ⌊1 + (N – 1) × 0.33⌉ ÷ 100                                        | ⌊1 + (N – 1) × 0.5⌉ ÷ 100                                         |
+| EURD         | 0.01                                                 | ⌊1 + (N – 1) × 0.33⌉ ÷ 100                                        | ⌊1 + (N – 1) × 0.5⌉ ÷ 100                                         |
+| GBPD         | 0.01                                                 | ⌊1 + (N – 1) × 0.33⌉ ÷ 100                                        | ⌊1 + (N – 1) × 0.5⌉ ÷ 100                                         |

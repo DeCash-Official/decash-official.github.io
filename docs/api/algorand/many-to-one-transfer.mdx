@@ -1,13 +1,13 @@
 # ManyToOneTransfer
 
-Send funds from multiple [Delegated Wallet](/docs/concepts/delegated-wallets) (owned by the same account), to another (regular or delegated) wallet.
+Send funds from multiple [Delegated Wallet](/docs/concepts/delegated-wallets) (owned by the same account), to another (regular or delegated) wallet, allowing to save a bit on the transfer fees.
 
 ## Request Parameters
 
 |     Name    |                    Type                   | Description |
 | ----------- | ----------------------------------------- | ----------- | 
 | `assetId`   | `string`                                  | The ID of the DeCash asset that is being sent. |
-| `senders`   | `Array<{address:string, amount:number}>`  | Array of objects containing the `address` of the accounts that are sending the funds, and the respective `amount` that are being sent. Note that each account must have enough funds to cover both the `amount`, and the [fee](#TODO). |
+| `senders`   | `Array<{address:string, amount:number}>`  | Array of objects containing the `address` of the accounts that are sending the funds, and the respective `amount` that are being sent. Note that each account must have enough funds to cover both the `amount`, and the [fee](/docs/api/fees). **This array can be 6 addresses at max**. |
 | `receiver`  | `string`                                  | The address of the account that is receiving the funds. Note that, if this account is not a Delegated Wallet, then it must be opted into the token that is being sent. | 
 
 ## Responses
