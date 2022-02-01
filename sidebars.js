@@ -34,6 +34,7 @@ const sidebars = {
   ],
   api: [
     "api/overview",
+    "api/fees",
     {
       type: "category",
       label: "API",
