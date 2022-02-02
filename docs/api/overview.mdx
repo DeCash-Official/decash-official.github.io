@@ -24,14 +24,24 @@ DeCash API is currently in alpha testing phase. You can talk to API using the fo
 <!-- + For DeCash tokens in the [main Algorand network](/docs/concepts/algorand#networks), use `https://` -->
 
 
-## API methods
+## API Methods
+
+### Informational Methods
 
 + [AssetInfo](/docs/api/algorand/asset-info)
-+ [CloseDelegatedWallet](/docs/api/algorand/close-delegated-wallet)
-+ [CreateDelegatedWallet](/docs/api/algorand/create-delegated-wallet)
++ [TransactionStatus](/docs/api/algorand/transaction-status)
++ [WalletsInfo](/docs/api/algorand/wallets-info)
+
+### Transactional Methods
+
 + [ManyToOneTransfer](/docs/api/algorand/many-to-one-transfer)
 + [OneToManyTransfer](/docs/api/algorand/one-to-many-transfer)
-+ [SubmitTransaction](/docs/api/algorand/submit-transaction)
-+ [TransactionStatus](/docs/api/algorand/transaction-status)
 + [TransferTokens](/docs/api/algorand/transfer-tokens)
-+ [WalletsInfo](/docs/api/algorand/wallets-info)
+
+To submit a signed transaction obtained from the methods above, use
+
++ [SubmitTransaction](/docs/api/algorand/submit-transaction)
+
+### Utility Methods
+
++ [CreateDelegatedWallet](/docs/api/algorand/create-delegated-wallet)
