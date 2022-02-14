@@ -13,6 +13,7 @@ prefer generating a unique owner address per each delegated wallet.
 |     Name    |         Type        | Description |
 | ----------- | ------------------- | ----------- | 
 | `owner`     | `string`            | The algorand address of the account that will manage the funds in the created Delegated Wallet. |
+| `seed`      | `number`            | OPTIONAL. The seed that will be used to create the delegated wallet. Each owner-seed pair corresponds to a different address. When empty, an incremental seed will be used. |
 
 ## Responses
 
@@ -21,6 +22,7 @@ prefer generating a unique owner address per each delegated wallet.
 |     Name    |         Type        | Description |
 | ----------- | ------------------- | ----------- | 
 | `wallet`    | `string`            | The algorand address of the created Delegated Wallet. | 
+| `seed`      | `number`            | The seed that was used to create the Delegated Wallet. |
 
 ### Validation rerors
 
