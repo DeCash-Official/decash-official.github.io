@@ -19,7 +19,7 @@ Each txnObject must have one of the following forms.
 | `type`      | `"assetTransfer"`                        | Field indicating that this txnObject describes an asset transfer. |
 | `from`      | `string`                                 | The address of the account that is sending the funds. |
 | `to`        | `string`                                 | The address of the account that is receiving the funds. |
-| `asset`     | `string|number`                          | The ID of the asset that is being sent. Can be either a string (i.e. USDD, EURD) or a number (i.e. 51987792, 51987793). |
+| `asset`     | `string`\|`number`                          | The ID of the asset that is being sent. Can be either a string (i.e. USDD, EURD) or a number (i.e. 51987792, 51987793). |
 | `amount`    | `number`                                 | The amount that is being sent. |
 | `closeTo`   | `string`                                 | OPTIONAL. If set, after sending the funds to the `to` account, sends the rest of the remaining funds to the `closeTo` account. |
 
@@ -38,8 +38,8 @@ Each txnObject must have one of the following forms.
 | `type`            | `"applicationCall"`                | Field indicating that this txnObject describes an application call. |
 | `from`            | `string`                           | The address of the account that is calling the application. |
 | `app`             | `string`                           | The ID of the application that is being called. |
-| `onComplete`      | `"NoOp"|"OptIn"|"CloseOut"|"Update"|"Delete"` | OPTIONAL. Describes the action that must be done after the call execution. By default is set to `"NoOp"`. |
-| `args`            | `Array<string|number>`             | OPTIONAL. The arguments that must be passed to the application. By default is set to the empty list. |
+| `onComplete`      | `"NoOp"`\|`"OptIn"`\|<br/>`"CloseOut"`\|`"Update"`\|`"Delete"` | OPTIONAL. Describes the action that must be done after the call execution. By default is set to `"NoOp"`. |
+| `args`            | `Array<string`\|`number>`             | OPTIONAL. The arguments that must be passed to the application. By default is set to the empty list. |
 | `accounts`        | `Array<string>`                    | OPTIONAL. The accounts arguments. |
 | `assets`          | `Array<number>`                    | OPTIONAL. The assets arguments. |
 | `applications`    | `Array<number>`                    | OPTIONAL. The applications arguments. |
