@@ -1,0 +1,130 @@
+# CreateTransactionGroup
+
+Create a generic transaction group.
+
+## Request Parameters
+
+|     Name    |                   Type                   | Description |
+| ----------- | ---------------------------------------- | ----------- |
+| `feePayer`  | `string`                                 | The address of the account that is paying the fee. |
+| `feeAsset`  | `string`                                 | The asset in which the fee is being paid. |
+| `txns`      | `Array<TxnObject>`                       | Array containing the description of each transaction to be sent. |
+
+### TxnObject
+
+Each txnObject must have one of the following forms.
+
+|     Name    |                   Type                   | Description |
+| ----------- | ---------------------------------------- | ----------- |
+| `type`      | `"assetTransfer"`                        | Field indicating that this txnObject describes an asset transfer. |
+| `from`      | `string`                                 | The address of the account that is sending the funds. |
+| `to`        | `string`                                 | The address of the account that is receiving the funds. |
+| `asset`     | `string`\|`number`                          | The ID of the asset that is being sent. Can be either a string (i.e. USDD, EURD) or a number (i.e. 51987792, 51987793). |
+| `amount`    | `number`                                 | The amount that is being sent. |
+| `closeTo`   | `string`                                 | OPTIONAL. If set, after sending the funds to the `to` account, sends the rest of the remaining funds to the `closeTo` account. |
+
+
+|     Name    |                   Type                   | Description |
+| ----------- | ---------------------------------------- | ----------- |
+| `type`      | `"algoTransfer"`                         | Field indicating that this txnObject describes an ALGO transfer. |
+| `from`      | `string`                                 | The address of the account that is sending the funds. |
+| `to`        | `string`                                 | The address of the account that is receiving the funds. |
+| `amount`    | `number`                                 | The amount that is being sent. |
+| `closeTo`   | `string`                                 | OPTIONAL. If set, after sending the funds to the `to` account, sends the rest of the remaining funds to the `closeTo` account. |
+
+
+|        Name       |                   Type             | Description |
+| ----------------- | ---------------------------------- | ----------- |
+| `type`            | `"applicationCall"`                | Field indicating that this txnObject describes an application call. |
+| `from`            | `string`                           | The address of the account that is calling the application. |
+| `app`             | `string`                           | The ID of the application that is being called. |
+| `onComplete`      | `"NoOp"`\|`"OptIn"`\|<br/>`"CloseOut"`\|`"Update"`\|`"Delete"` | OPTIONAL. Describes the action that must be done after the call execution. By default is set to `"NoOp"`. |
+| `args`            | `Array<string`\|`number>`          | OPTIONAL. The arguments that must be passed to the application. By default is set to the empty list. |
+| `accounts`        | `Array<string>`                    | OPTIONAL. A [list of accounts](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/#smart-contract-arrays) that this application call will have access to. |
+| `assets`          | `Array<number>`                    | OPTIONAL. A [list of assets](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/#smart-contract-arrays) that this application call will have access to. |
+| `applications`    | `Array<number>`                    | OPTIONAL. A [list of applications](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/#smart-contract-arrays) that this application call will have access to. |
+| `approvalProgram` | `string`                           | OPTIONAL. Must be set if the `onComplete` field is set to `update`. Must be equal to the new approval program, encoded in base64.
+| `clearProgram`    | `string`                           | OPTIONAL. Must be set if the `onComplete` field is set to `update`. Must be equal to the new clear program, encoded in base64.
+
+
+|     Name    |                   Type                   | Description |
+| ----------- | ---------------------------------------- | ----------- |
+| `type`      | `"raw"`                                  | Field indicating that this is a raw txnObject. |
+| `txn`       | `string`                                 | The Algorand txn object encoded in base64. |
+
+
+## Responses
+
+### Regular response
+
+|     Name    |                   Type                  | Description |
+| ----------- | --------------------------------------- | ----------- | 
+| `txns`      | `Array<{txn:string, signers:string[]}>` | Array of objects each containing a transaction (in msgpack) and an array of `signers` (a list of addresses of the accounts that must sign the transaction). Transactions with an empty `signers` array shall not be signed. |
+| `info`      | `{fee:number}`                          | An object containing `fee`, the amount of DeCash that is being spent on fees in this transaction. (e.g. 1.05 USDD) | 
+
+### Validation errors
+
+Returned when the parameters are invalid.
+
+|     Name    |                              Content                              |
+| ----------- | ----------------------------------------------------------------- |
+| Status code | 400                                                               |
+| `errorId`   | `INVALID_PARAMS`                                                  |
+| `message`   | `Validation errors in CreateTransactionGroup request.`            | 
+| `errors`    | Array of strings containing additional informations.              |
+
+## Example Usage
+
+<Tabs>
+<TabItem value="js" label="JavaScript">
+
+```js
+const response = await fetch('https://api.preprod.decash.com/v1/CreateTransactionGroup', {
+  method: 'POST',
+  body: JSON.stringify({
+    'feePayer': 'LX2XVJP7F5TQVOJ6DL4NPR5RH77XEG5US76WL7LIJL7OW6YPXDNPGIFWPM',
+    'feeAsset': 'USDD',
+    'txns': [
+      {
+        'type': 'assetTransfer',
+        'from': 'LX2XVJP7F5TQVOJ6DL4NPR5RH77XEG5US76WL7LIJL7OW6YPXDNPGIFWPM',
+        'to': 'YLCY7SE2XBY52EMOIBZAMXTSXPFVVECIQOHVBIWIR2Z5NT2QLLN2ADZZSE',
+        'amount': 12.99,
+        'asset': 'USDD',
+      }, {
+        'type': 'applicationCall',
+        'from': 'LX2XVJP7F5TQVOJ6DL4NPR5RH77XEG5US76WL7LIJL7OW6YPXDNPGIFWPM',
+        'app': 1337,
+        'args': ['stake'],
+      }
+    ]
+  })
+});
+const data = await response.json();
+```
+
+</TabItem>
+</Tabs>
+
+## Example Success Response
+
+```json
+{
+  "txns": [
+    {
+      "txn": "iqRhcGFhlMQEdmdlbsQBWMQBWMQBWKRhcGlkzgQ7lWCjZmVlzQ+gomZ2zgFK5j6jZ2VurHRlc3RuZXQtdjEuMKJnaMQgSGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiKjZ3JwxCB+X/1xrzIH1pNbuFQEL619bPx/dbYaqFrg13nlZVV7Y6Jsds4BSuomo3NuZMQgnu6hJOJLh9rTBj7efGmBjFWHYA8DKF4VJ/IzOYImWD2kdHlwZaRhcHBs",
+      "signers": []
+    }, {
+      "txn": "iqRhYW10FKRhcmN2xCBr5CIUPJMmRSusjz6sT4DqcqoKtw1E03+tlgl8zDXHj6Jmds4BSuY+o2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToio2dycMQgfl/9ca8yB9aTW7hUBC+tfWz8f3W2Gqha4Nd55WVVe2OibHbOAUrqJqNzbmTEIF31eqX/L2cKuT4a+NfHsT//chu0l/1l/WhK/ut7D7japHR5cGWlYXhmZXKkeGFpZM4DGUVQ",
+      "signers": ["LX2XVJP7F5TQVOJ6DL4NPR5RH77XEG5US76WL7LIJL7OW6YPXDNPGIFWPM"]
+    }, {
+      "txn": "iqRhYW10zQUTpGFyY3bEIMLFj8iauHHdEY5AcgZecrvLWpBIg49QosiOs9bPUFrbomZ2zgFK5j6jZ2VurHRlc3RuZXQtdjEuMKJnaMQgSGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiKjZ3JwxCB+X/1xrzIH1pNbuFQEL619bPx/dbYaqFrg13nlZVV7Y6Jsds4BSuomo3NuZMQgXfV6pf8vZwq5Phr418exP/9yG7SX/WX9aEr+63sPuNqkdHlwZaVheGZlcqR4YWlkzgMZRVA=",
+      "signers": ["LX2XVJP7F5TQVOJ6DL4NPR5RH77XEG5US76WL7LIJL7OW6YPXDNPGIFWPM"]
+    }, {
+      "txn": "iaRhcGFhkcQFc3Rha2WkYXBpZM0FOaJmds4BSuY+o2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToio2dycMQgfl/9ca8yB9aTW7hUBC+tfWz8f3W2Gqha4Nd55WVVe2OibHbOAUrqJqNzbmTEIF31eqX/L2cKuT4a+NfHsT//chu0l/1l/WhK/ut7D7japHR5cGWkYXBwbA==",
+      "signers": ["LX2XVJP7F5TQVOJ6DL4NPR5RH77XEG5US76WL7LIJL7OW6YPXDNPGIFWPM"]
+    }
+  ],
+  "info": { "asaFee": 0.2 }
+}
+```
