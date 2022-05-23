@@ -39,10 +39,10 @@ Each txnObject must have one of the following forms.
 | `from`            | `string`                           | The address of the account that is calling the application. |
 | `app`             | `string`                           | The ID of the application that is being called. |
 | `onComplete`      | `"NoOp"`\|`"OptIn"`\|<br/>`"CloseOut"`\|`"Update"`\|`"Delete"` | OPTIONAL. Describes the action that must be done after the call execution. By default is set to `"NoOp"`. |
-| `args`            | `Array<string`\|`number>`             | OPTIONAL. The arguments that must be passed to the application. By default is set to the empty list. |
-| `accounts`        | `Array<string>`                    | OPTIONAL. The accounts arguments. |
-| `assets`          | `Array<number>`                    | OPTIONAL. The assets arguments. |
-| `applications`    | `Array<number>`                    | OPTIONAL. The applications arguments. |
+| `args`            | `Array<string`\|`number>`          | OPTIONAL. The arguments that must be passed to the application. By default is set to the empty list. |
+| `accounts`        | `Array<string>`                    | OPTIONAL. A [list of accounts](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/#smart-contract-arrays) that this application call will have access to. |
+| `assets`          | `Array<number>`                    | OPTIONAL. A [list of assets](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/#smart-contract-arrays) that this application call will have access to. |
+| `applications`    | `Array<number>`                    | OPTIONAL. A [list of applications](https://developer.algorand.org/docs/get-details/dapps/smart-contracts/apps/#smart-contract-arrays) that this application call will have access to. |
 | `approvalProgram` | `string`                           | OPTIONAL. Must be set if the `onComplete` field is set to `update`. Must be equal to the new approval program, encoded in base64.
 | `clearProgram`    | `string`                           | OPTIONAL. Must be set if the `onComplete` field is set to `update`. Must be equal to the new clear program, encoded in base64.
 
