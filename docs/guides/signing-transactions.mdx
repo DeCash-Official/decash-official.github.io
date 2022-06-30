@@ -125,7 +125,9 @@ Once signed, an array of transactions is returned. However, this array must be f
 
 ```js
 const unsigned = txns.filter(({signers}) => signers.length == 0).map(({txn}) => txn);
-const signed = result.filter(txn => txn != undefined).map(txn => btoa(String.fromCharCode.apply(null, txn)))
+const signed = result
+    .filter(txn => txn != undefined)
+    .map(txn => typeof txn === "string" ? txn : btoa(String.fromCharCode.apply(null, txn))); // Since Pera wallet on iOS sends txn as string.
 ```
 
 These results can then be sent to the `SubmitTransaction` endpoint for submission.
