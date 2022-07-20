@@ -7,7 +7,7 @@ Send DeCash from one wallet to another. This endpoint work for both regular and 
 |     Name    |                   Type                   | Description |
 | ----------- | ---------------------------------------- | ----------- |
 | `assetId`   | `string`                                 | The ID of the DeCash asset that is being sent. |
-| `sender`    | `{address:string, amount:number\|"max"}` | Object containing the `address` of the wallet that is sending the funds, and the `amount` that is being sent. Note that this account must have enough funds to cover both the `amount`, and the [fee](/docs/api/fees). If `amount` is set to max, then all of the funds of asset `assetId` are sent to `receiver` (minus the required fee). |
+| `sender`    | `{address:string, amount:number`\|`"max"}` | Object containing the `address` of the wallet that is sending the funds, and the `amount` that is being sent. Note that this account must have enough funds to cover both the `amount`, and the [fee](/docs/api/fees). If `amount` is set to max, then all of the funds of asset `assetId` are sent to `receiver` (minus the required fee). |
 | `receiver`  | `string`                                 | The address of the account that is receiving the funds. Note that, if this account is not a Delegated Wallet, then it must be opted into the token that is being sent. | 
 
 ## Responses

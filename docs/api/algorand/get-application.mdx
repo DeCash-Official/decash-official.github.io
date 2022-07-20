@@ -15,9 +15,9 @@ Get details and state of an application.
 
 |      Name      |                   Type                  | Description |
 | -------------- | --------------------------------------- | ----------- | 
-| `info`         | `{ creator:string }>`                   | Object containing the address of the `creator` of the application. |
-| `globalState`  | `{ [k: string]: string|number }`        | The global state of the application as a key value store. All keys are encoded in base64. If the value is a bytestring, it is returned as a base64 encoded string. If otherwise it is an uint64, it is returned as a number. |
-| `localState`   | `{ [k: string]: string|number }`        | OPTIONAL. The local state of the application with relation to the provided user address. |
+| `info`         | `{creator: string}`                     | Object containing the address of the `creator` of the application. |
+| `globalState`  | `{[k: string]: string`\|`number}`       | The global state of the application as a key value store. All keys are encoded in base64. If the value is a bytestring, it is returned as a base64 encoded string. If otherwise it is an uint64, it is returned as a number. |
+| `localState`   | `{[k: string]: string`\|`number}`       | OPTIONAL. The local state of the application with relation to the provided user address. |
 
 ## Example Usage
 
@@ -29,7 +29,7 @@ const response = await fetch('https://api.preprod.decash.com/v1/GetApplication',
     method: 'POST',
     body: JSON.stringify({
         app: 98115918,
-				user: 'NMREIQPDPKKB3NCRORRKT4DEXUAB7EGK3G3DPQ5GTAYKZ2PGLQGTWLXKH4',
+        user: 'NMREIQPDPKKB3NCRORRKT4DEXUAB7EGK3G3DPQ5GTAYKZ2PGLQGTWLXKH4',
     
     })
 })
